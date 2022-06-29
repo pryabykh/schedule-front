@@ -21,7 +21,7 @@ class Form extends React.Component {
 
     render() {
         return (
-            <div className="mt-5 login-form-container">
+            <div className="login-form-container">
                 <form>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email</label>
@@ -29,7 +29,7 @@ class Form extends React.Component {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">Пароль</label>
-                        <input value={this.state.password} onChange={this.handleChange} type="password" className="form-control" id="password" name="password"/>
+                        <input value={this.state.password} onChange={this.handleChange} type="password" className="form-control" id="password" name="password" />
                     </div>
                     <button type="submit" className="btn btn-dark">Войти</button>
                 </form>
@@ -43,4 +43,4 @@ Form.defaultProps = {
     password: ""
 }
 
-export default Form;
+export default Form

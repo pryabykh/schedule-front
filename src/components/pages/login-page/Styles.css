@@ -11,3 +11,11 @@ form {
     box-shadow: none;
     border: 1px solid black;
 }
+.alert {
+    width: 500px;
+}
+.alert-success-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

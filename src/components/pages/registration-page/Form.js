@@ -1,5 +1,9 @@
 import React from 'react';
 import './Styles.css';
+import {register} from '../../../store/appSlice';
+import {showNotificationSuccessLoginPage} from '../../../store/loginPageSlice';
+import {connect} from 'react-redux'
+import {Link} from 'react-router-dom';
 
 class Form extends React.Component {
     constructor(props) {
@@ -19,6 +23,11 @@ class Form extends React.Component {
                 [event.target.name]: event.target.value
             }
         }))
+    }
+
+    handleSubmit = event => {
+        this.props.register()
+        this.props.showNotificationSuccessLoginPage("Регистрация прошла успешно, Вы можете войти в личный кабинет.")
     }
 
     render() {
@@ -42,7 +51,7 @@ class Form extends React.Component {
                         <input value={this.state.password} onChange={this.handleChange} type="password" className="form-control" id="password" name="password" aria-describedby="passwordHelp" />
                         <div id="passwordHelp" className="form-text">Пароль должен содержать минимум 6 символов.</div>
                     </div>
-                    <button type="submit" className="btn btn-dark">Зарегистрироваться</button>
+                    <Link to="/login" onClick={this.handleSubmit} className="btn btn-dark">Зарегистрироваться</Link>
                 </form>
             </div>
         );
@@ -56,4 +65,13 @@ Form.defaultProps = {
     password: ""
 }
 
-export default Form;
+const mapStateToProps = state => ({
+    notificationText: state.rootReducer.loginPageReducer.notificationSuccessText,
+    stateus: state
+})
+
+const mapDispatchToProps = {
+    register, showNotificationSuccessLoginPage
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form)
