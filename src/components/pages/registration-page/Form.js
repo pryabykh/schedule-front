@@ -39,8 +39,8 @@ class Form extends React.Component {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">Пароль</label>
-                        <input value={this.state.password} onChange={this.handleChange} type="password" className="form-control" id="password" name="password" aria-describedby="emailHelp" />
-                        <div id="emailHelp" className="form-text">Пароль должен содержать минимум 6 символов.</div>
+                        <input value={this.state.password} onChange={this.handleChange} type="password" className="form-control" id="password" name="password" aria-describedby="passwordHelp" />
+                        <div id="passwordHelp" className="form-text">Пароль должен содержать минимум 6 символов.</div>
                     </div>
                     <button type="submit" className="btn btn-dark">Зарегистрироваться</button>
                 </form>

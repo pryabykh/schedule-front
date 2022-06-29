@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import LoginPage from './components/pages/login-page/LoginPage';
 import RegistrationPage from './components/pages/registration-page/RegistrationPage';
 
 function App() {
@@ -7,7 +8,8 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" exact element={null} />
-          <Route path="/registration" element={<RegistrationPage/>} />
+          <Route path="/registration" exact element={<RegistrationPage/>} />
+          <Route path="/login" exact element={<LoginPage/>} />
         </Routes>
       </div>
     </Router>
