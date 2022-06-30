@@ -1,77 +1,75 @@
-import React from 'react';
-import './Styles.css';
-import {register} from '../../../store/appSlice';
-import {showNotificationSuccessLoginPage} from '../../../store/loginPageSlice';
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react'
+import {Link} from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { registerUser } from '../../../store/registrationPageSlice'
+import {showNotificationSuccessLoginPage} from '../../../store/loginPageSlice'
 
-class Form extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            firstName: this.props.firstName,
-            lastName: this.props.lastName,
-            email: this.props.email,
-            password: this.props.password
+function Form(props) {
+    const [firstName, setFirstName] = useState(props.firstName);
+    const [lastName, setLastName] = useState(props.lastName);
+    const [email, setEmail] = useState(props.email);
+    const [password, setPassword] = useState(props.password);
+
+    const dispatch = useDispatch()
+
+    const handleFirstNameChange = event => {
+        setFirstName(event.target.value);
+    }
+
+    const handleLastNameChange = event => {
+        setLastName(event.target.value);
+    }
+
+    const handleEmailChange = event => {
+        setEmail(event.target.value);
+    }
+
+    const handlePasswordChange = event => {
+        setPassword(event.target.value);
+    }
+
+    const handleSubmit = event => {
+        const user = {
+            firstName,
+            lastName,
+            email,
+            password
         }
+        dispatch(registerUser(user))
+        dispatch(showNotificationSuccessLoginPage("Регистрация прошла успешно, Вы можете войти в личный кабинет."))
     }
 
-    handleChange = event => {
-        event.persist()
-        this.setState(prev => ({
-            ...prev, ...{
-                [event.target.name]: event.target.value
-            }
-        }))
-    }
-
-    handleSubmit = event => {
-        this.props.register()
-        this.props.showNotificationSuccessLoginPage("Регистрация прошла успешно, Вы можете войти в личный кабинет.")
-    }
-
-    render() {
-        return (
-            <div className="mt-5 registration-form-container">
-                <form>
-                    <div className="mb-3">
-                        <label htmlFor="firstName" className="form-label">Имя</label>
-                        <input value={this.state.firstName} onChange={this.handleChange} type="text" className="form-control" id="firstName" name="firstName" />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="lastName" className="form-label">Фамилия</label>
-                        <input value={this.state.lastName} onChange={this.handleChange} type="lastName" className="form-control" id="lastName" name="lastName" />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Email</label>
-                        <input value={this.state.email} onChange={this.handleChange} type="email" className="form-control" id="email" name="email" />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label">Пароль</label>
-                        <input value={this.state.password} onChange={this.handleChange} type="password" className="form-control" id="password" name="password" aria-describedby="passwordHelp" />
-                        <div id="passwordHelp" className="form-text">Пароль должен содержать минимум 6 символов.</div>
-                    </div>
-                    <Link to="/login" onClick={this.handleSubmit} className="btn btn-dark">Зарегистрироваться</Link>
-                </form>
+    return (
+        <div className="mt-5 registration-form-container">
+        <form>
+            <div className="mb-3">
+                <label htmlFor="firstName" className="form-label">Имя</label>
+                <input value={firstName} onChange={handleFirstNameChange} type="text" className="form-control" id="firstName" name="firstName" />
             </div>
-        );
-    }
-}
+            <div className="mb-3">
+                <label htmlFor="lastName" className="form-label">Фамилия</label>
+                <input value={lastName} onChange={handleLastNameChange} type="lastName" className="form-control" id="lastName" name="lastName" />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="email" className="form-label">Email</label>
+                <input value={email} onChange={handleEmailChange} type="email" className="form-control" id="email" name="email" />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="password" className="form-label">Пароль</label>
+                <input value={password} onChange={handlePasswordChange} type="password" className="form-control" id="password" name="password" aria-describedby="passwordHelp" />
+                <div id="passwordHelp" className="form-text">Пароль должен содержать минимум 6 символов.</div>
+            </div>
+            <Link to="/login" onClick={handleSubmit} className="btn btn-dark">Зарегистрироваться</Link>
+        </form>
+    </div>
+    );
+  }
 
-Form.defaultProps = {
+  Form.defaultProps = {
     firstName: "",
     lastName: "",
     email: "",
     password: ""
 }
-
-const mapStateToProps = state => ({
-    notificationText: state.rootReducer.loginPageReducer.notificationSuccessText,
-    stateus: state
-})
-
-const mapDispatchToProps = {
-    register, showNotificationSuccessLoginPage
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form)
+  
+  export default Form;
