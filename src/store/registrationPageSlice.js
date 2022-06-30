@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { register } from '../api/UserApi';
 
 export const registerUser = createAsyncThunk(
@@ -8,7 +8,7 @@ export const registerUser = createAsyncThunk(
         // Никакой обработки ошибок
         const response = await register(user)
         const json = await response.json()
-        return json;
+        return json
     }
 );
 
@@ -37,7 +37,6 @@ const registrationPageSlice = createSlice({
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.loading = 'idle'
                 state.error = null
-                console.log(action.payload)
             
             })
             // Вызывается в случае ошибки
