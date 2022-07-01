@@ -60,7 +60,7 @@ function Form(props) {
                     <input value={password} onChange={handlePasswordChange} type="password" className="form-control" id="password" name="password" aria-describedby="passwordHelp" />
                     <div id="passwordHelp" className="form-text">Пароль должен содержать минимум 6 символов.</div>
                 </div>
-                <button onClick={handleSubmit} type="submit" className="btn btn-dark">Войти</button>
+                <button onClick={handleSubmit} type="submit" className="btn btn-dark">Зарегистрироваться</button>
             </form>
         </div>
     );
