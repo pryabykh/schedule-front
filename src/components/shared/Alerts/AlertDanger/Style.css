@@ -1,0 +1,8 @@
+.alert {
+    width: 500px;
+}
+.alert-danger-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

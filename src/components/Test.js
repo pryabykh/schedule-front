@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { registerUser } from '../store/registrationPageSlice'
 import { register } from '../services/UserService'
 import { useNavigate } from 'react-router-dom'
-import Loader from './shared/Loader'
+import Loader from './shared/Loader/Loader'
 import { showLoader } from '../store/appSlice'
 
 function Test() {

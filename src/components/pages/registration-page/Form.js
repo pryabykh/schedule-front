@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { register } from '../../../services/UserService'
-import Loader from '../../shared/Loader';
+import './Styles.css';
 
 function Form(props) {
     const [firstName, setFirstName] = useState(props.firstName);
@@ -41,8 +41,7 @@ function Form(props) {
     }
 
     return (
-        <div className="mt-5 registration-form-container">
-            <Loader />
+        <div className="registration-form-container">
             <form>
                 <div className="mb-3">
                     <label htmlFor="firstName" className="form-label">Имя</label>

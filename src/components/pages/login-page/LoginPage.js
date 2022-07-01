@@ -2,15 +2,11 @@ import React from 'react';
 import Form from './Form';
 import Header from './Header';
 import { connect } from 'react-redux'
-import AlertSuccess from './AlertSuccess';
+import AlertSuccess from '../../shared/Alerts/AlertSuccess/AlertSuccess';
 
-class LoginPage extends React.Component {
-    alertSuccess = this.props.notificationSuccessOpened && (<AlertSuccess text={this.props.notificationSuccessText} />)
-
-
-    render() {
-        return (
-            <div className="container">
+function LoginPage({ text }) {
+    return (
+        <div className="container">
                 <div className='row'>
                     <div className='col-12'>
                         <Header />
@@ -18,7 +14,7 @@ class LoginPage extends React.Component {
                 </div>
                 <div className='row'>
                     <div className='col-12'>
-                        {this.alertSuccess}
+                        <AlertSuccess />
                     </div>
                 </div>
                 <div className='row'>
@@ -27,17 +23,7 @@ class LoginPage extends React.Component {
                     </div>
                 </div>
             </div >
-        );
-    }
+    );
 }
 
-const mapStateToProps = state => ({
-    notificationSuccessText: state.rootReducer.loginPageReducer.notificationSuccessText,
-    notificationSuccessOpened: state.rootReducer.loginPageReducer.notificationSuccessOpened
-})
-
-const mapDispatchToProps = {
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)
+export default LoginPage;
