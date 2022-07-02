@@ -1,4 +1,6 @@
 import { register as apiRegister } from "../api/UserApi";
+import { SOMETHING_WENT_WRONG_MESSAGE, SUCCESSFUL_REGISTRATION_MESSAGE } from "../const/interface";
+import { LOGIN_ROUTE } from "../const/routes";
 import { hideLoader, setAlertDanger, setAlertSuccess, showLoader } from "../store/appSlice";
 
 export const register = async (user, navigate, dispatch) => {
@@ -14,14 +16,14 @@ export const register = async (user, navigate, dispatch) => {
     })
 
     const doSuccess = () => {
-        dispatch(setAlertSuccess("Регистрация прошла успешно, Вы можете войти в личный кабинет."))
+        dispatch(setAlertSuccess(SUCCESSFUL_REGISTRATION_MESSAGE))
         dispatch(setAlertDanger(""))
-        navigate("/login")
+        navigate(LOGIN_ROUTE)
         dispatch(hideLoader())
     }
 
     const doFail = () => {
         dispatch(hideLoader())
-        dispatch(setAlertDanger("Что-то пошло не так. Попробуйте снова через некоторое время."))
+        dispatch(setAlertDanger(SOMETHING_WENT_WRONG_MESSAGE))
     }
 }

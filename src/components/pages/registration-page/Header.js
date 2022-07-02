@@ -1,11 +1,12 @@
-import { FaTwitter } from 'react-icons/fa';
+import { MAIN_HEADER, REGISTRATION_HEADER } from '../../../const/interface';
+import MainIcon from '../../shared/MainIcon/MainIcon';
 import './Styles.css';
 
 function Header() {
     return (
         <header className='text-center mt-5 mb-5'>
-            <h1><FaTwitter />Помощник директора</h1>
-            <h2>Зарегистрировать аккаунт</h2>
+            <h1><MainIcon />{MAIN_HEADER}</h1>
+            <h2>{REGISTRATION_HEADER}</h2>
         </header>
     );
 }

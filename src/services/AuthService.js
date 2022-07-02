@@ -1,5 +1,7 @@
 import { login as apiLogin } from "../api/AuthApi";
+import { FORBIDDEN_MESSAGE, SOMETHING_WENT_WRONG_MESSAGE } from "../const/interface";
 import { ACCESS_EXPIRES_AT, ACCESS_TOKEN, REFRESH_EXPIRES_AT, REFRESH_TOKEN } from "../const/local-storage";
+import { LK_ROUTE } from "../const/routes";
 import { hideLoader, setAlertDanger, setAlertSuccess, showLoader } from "../store/appSlice";
 
 export const login = async (credentials, navigate, dispatch) => {
@@ -24,7 +26,7 @@ export const login = async (credentials, navigate, dispatch) => {
         setTokenToLocalStorage(content)
         dispatch(setAlertDanger(""))
         dispatch(hideLoader())
-        navigate("/lk")
+        navigate(LK_ROUTE)
     }
 
     const setTokenToLocalStorage = (content) => {
@@ -37,12 +39,12 @@ export const login = async (credentials, navigate, dispatch) => {
     const doForbidden = () => {
         dispatch(hideLoader())
         dispatch(setAlertSuccess(""))
-        dispatch(setAlertDanger("Неверный email или пароль."))
+        dispatch(setAlertDanger(FORBIDDEN_MESSAGE))
     }
 
     const doFail = () => {
         dispatch(hideLoader())
         dispatch(setAlertSuccess(""))
-        dispatch(setAlertDanger("Что-то пошло не так. Попробуйте снова через некоторое время."))
+        dispatch(setAlertDanger(SOMETHING_WENT_WRONG_MESSAGE))
     }
 }

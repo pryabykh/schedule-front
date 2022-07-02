@@ -1,6 +1,6 @@
 import React from 'react'
-import './Style.css'
 import { useSelector } from 'react-redux'
+import './Style.css'
 
 function AlertSuccess() {
     const alertSuccessText = useSelector((state) => state.rootReducer.appReducer.alertSuccessText)
