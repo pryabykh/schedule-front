@@ -1,8 +1,9 @@
-import { FaCheck } from 'react-icons/fa';
+import { FiArrowUpRight } from 'react-icons/fi';
+import './Style.css';
 
 function MainIcon() {
     return (
-        <FaCheck />
+        <FiArrowUpRight className="main-icon" />
     );
 }
 
