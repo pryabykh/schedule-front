@@ -1,7 +1,5 @@
-import { FaCheck } from 'react-icons/fa';
 import { LOGIN_HEADER, MAIN_HEADER } from '../../../const/interface';
 import MainIcon from '../../shared/MainIcon/MainIcon';
-import './Styles.css';
 
 function Header() {
     return (

@@ -1,66 +1,111 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { register } from '../../../services/UserService'
-import './Styles.css';
+import style from './registration.module.css'
+import FormInput from '../../shared/FormInput/FormInput';
+import { EMAIL_INPUT_LABEL, EMAIL_INPUT_NAME, EMAIL_INVALID_INPUT_MESSAGE, FIRST_NAME_INPUT_LABEL, FIRST_NAME_INPUT_NAME, FIRST_NAME_INVALID_INPUT_MESSAGE, LAST_NAME_INPUT_LABEL, LAST_NAME_INPUT_NAME, LAST_NAME_INVALID_INPUT_MESSAGE, PASSWORD_INPUT_LABEL, PASSWORD_INPUT_NAME, PASSWORD_INVALID_INPUT_MESSAGE } from '../../../const/interface'
+import { validate } from './FormValidation'
+import { INPUT_FOCUSED, INPUT_VALID, ON_CHANGE } from '../../../const/validation'
 
-function Form(props) {
-    const [firstName, setFirstName] = useState(props.firstName);
-    const [lastName, setLastName] = useState(props.lastName);
-    const [email, setEmail] = useState(props.email);
-    const [password, setPassword] = useState(props.password);
-
-    const handleFirstNameChange = event => {
-        setFirstName(event.target.value);
-    }
-
-    const handleLastNameChange = event => {
-        setLastName(event.target.value);
-    }
-
-    const handleEmailChange = event => {
-        setEmail(event.target.value);
-    }
-
-    const handlePasswordChange = event => {
-        setPassword(event.target.value);
-    }
-
+function Form() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const validationStatus = {
+        firstNameInputValid: useSelector((state) => state.rootReducer.registrationPageReducer[FIRST_NAME_INPUT_NAME + INPUT_VALID]),
+        firstNameInputFocused: useSelector((state) => state.rootReducer.registrationPageReducer[FIRST_NAME_INPUT_NAME + INPUT_FOCUSED]),
+
+        lastNameInputValid: useSelector((state) => state.rootReducer.registrationPageReducer[LAST_NAME_INPUT_NAME + INPUT_VALID]),
+        lastNameInputFocused: useSelector((state) => state.rootReducer.registrationPageReducer[LAST_NAME_INPUT_NAME + INPUT_FOCUSED]),
+
+        emailInputValid: useSelector((state) => state.rootReducer.registrationPageReducer[EMAIL_INPUT_NAME + INPUT_VALID]),
+        emailInputFocused: useSelector((state) => state.rootReducer.registrationPageReducer[EMAIL_INPUT_NAME + INPUT_FOCUSED]),
+
+        passwordInputValid: useSelector((state) => state.rootReducer.registrationPageReducer[PASSWORD_INPUT_NAME + INPUT_VALID]),
+        passwordInputFocused: useSelector((state) => state.rootReducer.registrationPageReducer[PASSWORD_INPUT_NAME + INPUT_FOCUSED]),
+    }
+
+    const [values, setValues] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: ""
+    });
+
+    const inputs = [
+        {
+            key: 1,
+            id: FIRST_NAME_INPUT_NAME,
+            name: FIRST_NAME_INPUT_NAME,
+            label: FIRST_NAME_INPUT_LABEL,
+            type: "text",
+            valid: validationStatus['firstNameInputValid'],
+            focused: validationStatus['firstNameInputFocused'],
+            invalidText: FIRST_NAME_INVALID_INPUT_MESSAGE
+        },
+        {
+            key: 2,
+            id: LAST_NAME_INPUT_NAME,
+            name: LAST_NAME_INPUT_NAME,
+            label: LAST_NAME_INPUT_LABEL,
+            type: "text",
+            valid: validationStatus['lastNameInputValid'],
+            focused: validationStatus['lastNameInputFocused'],
+            invalidText: LAST_NAME_INVALID_INPUT_MESSAGE
+        },
+        {
+            key: 3,
+            id: EMAIL_INPUT_NAME,
+            name: EMAIL_INPUT_NAME,
+            label: EMAIL_INPUT_LABEL,
+            type: "email",
+            valid: validationStatus['emailInputValid'],
+            focused: validationStatus['emailInputFocused'],
+            invalidText: EMAIL_INVALID_INPUT_MESSAGE
+        },
+        {
+            key: 4,
+            id: PASSWORD_INPUT_NAME,
+            name: PASSWORD_INPUT_NAME,
+            label: PASSWORD_INPUT_LABEL,
+            type: "password",
+            valid: validationStatus['passwordInputValid'],
+            focused: validationStatus['passwordInputFocused'],
+            invalidText: PASSWORD_INVALID_INPUT_MESSAGE
+        }
+    ]
 
     const handleSubmit = event => {
         event.preventDefault()
         const user = {
-            firstName,
-            lastName,
-            email,
-            password
+            ...values
         }
         register(user, navigate, dispatch)
     }
 
+    const onChange = (e) => {
+        setValues({ ...values, [e.target.name]: e.target.value });
+        const inputWasFocused = validationStatus[e.target.name + INPUT_FOCUSED]
+        const inputWasValid = validationStatus[e.target.name + INPUT_VALID]
+        validate(e.target.name, e.target.value, dispatch, inputWasFocused, inputWasValid, ON_CHANGE)
+    };
+
+    const onBlur = (e) => {
+        validate(e.target.name, e.target.value, dispatch)
+    }
+
+    const formValid = validationStatus.firstNameInputValid &&
+        validationStatus.lastNameInputValid &&
+        validationStatus.emailInputValid &&
+        validationStatus.passwordInputValid
+
     return (
-        <div className="registration-form-container">
-            <form>
-                <div className="mb-3">
-                    <label htmlFor="firstName" className="form-label">Имя</label>
-                    <input value={firstName} onChange={handleFirstNameChange} type="text" className="form-control" id="firstName" name="firstName" />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="lastName" className="form-label">Фамилия</label>
-                    <input value={lastName} onChange={handleLastNameChange} type="lastName" className="form-control" id="lastName" name="lastName" />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email</label>
-                    <input value={email} onChange={handleEmailChange} type="email" className="form-control" id="email" name="email" />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Пароль</label>
-                    <input value={password} onChange={handlePasswordChange} type="password" className="form-control" id="password" name="password" aria-describedby="passwordHelp" />
-                    <div id="passwordHelp" className="form-text">Пароль должен содержать минимум 6 символов.</div>
-                </div>
-                <button onClick={handleSubmit} type="submit" className="btn btn-dark">Зарегистрироваться</button>
+        <div className={style["registration-form-container"]}>
+            <form onSubmit={handleSubmit}>
+                {inputs.map((input) => (
+                    <FormInput {...input} value={values[input.name]} onChange={onChange} onBlur={onBlur} />
+                ))}
+                <button type="submit" className="btn btn-dark mt-2" disabled={!formValid}>Зарегистрироваться</button>
             </form>
         </div>
     );

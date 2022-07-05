@@ -1,53 +1,36 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { register } from '../api/UserApi';
-
-export const registerUser = createAsyncThunk(
-    'registerUser',
-    async (user) => {
-        // Здесь только логика запроса и возврата данных
-        // Никакой обработки ошибок
-        const response = await register(user)
-        const json = await response.json()
-        return json
-    }
-);
+import { createSlice } from '@reduxjs/toolkit';
+import { EMAIL_INPUT_NAME, FIRST_NAME_INPUT_NAME, LAST_NAME_INPUT_NAME, PASSWORD_INPUT_NAME } from '../const/inputs';
+import { INPUT_FOCUSED, INPUT_VALID } from '../const/validation';
 
 const registrationPageSlice = createSlice({
     name: 'registrationPage',
     initialState: {
-        loading: 'idle',
-        error: null,
-        notificationSuccessOpened: false,
-        notificationSuccessText: ""
+        [FIRST_NAME_INPUT_NAME + INPUT_FOCUSED]: false,
+        [FIRST_NAME_INPUT_NAME + INPUT_VALID]: false,
+
+        [LAST_NAME_INPUT_NAME + INPUT_FOCUSED]: false,
+        [LAST_NAME_INPUT_NAME + INPUT_VALID]: false,
+
+        [EMAIL_INPUT_NAME + INPUT_FOCUSED]: false,
+        [EMAIL_INPUT_NAME + INPUT_VALID]: false,
+
+        [PASSWORD_INPUT_NAME + INPUT_FOCUSED]: false,
+        [PASSWORD_INPUT_NAME + INPUT_VALID]: false,
     },
     reducers: {
-        showNotificationSuccessRegistrationPage: (state, action) => {
-            state.notificationSuccessText = action.payload;
-            state.notificationSuccessOpened = true;
+        setInputInvalid: (state, action) => {
+            const inputName = action.payload;
+            state[inputName + INPUT_FOCUSED] = true;
+            state[inputName + INPUT_VALID] = false;
+        },
+        setInputValid: (state, action) => {
+            const inputName = action.payload;
+            state[inputName + INPUT_FOCUSED] = true;
+            state[inputName + INPUT_VALID] = true;
         }
-    },
-    extraReducers: (builder) => {
-        builder
-            // Вызывается прямо перед выполнением запроса
-            .addCase(registerUser.pending, (state) => {
-                state.loading = 'loading';
-                state.error = null;
-            })
-            // Вызывается в том случае если запрос успешно выполнился
-            .addCase(registerUser.fulfilled, (state, action) => {
-                state.loading = 'idle'
-                state.error = null
-            
-            })
-            // Вызывается в случае ошибки
-            .addCase(registerUser.rejected, (state, action) => {
-                state.loading = 'failed';
-                // https://redux-toolkit.js.org/api/createAsyncThunk#handling-thunk-errors
-                state.error = action.error;
-            });
     },
 })
 
-export const { showNotificationSuccessRegistrationPage } = registrationPageSlice.actions;
+export const { setInputInvalid, setInputValid } = registrationPageSlice.actions;
 
 export default registrationPageSlice.reducer;

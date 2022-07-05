@@ -6,8 +6,3 @@ form {
     align-items: center;
     justify-content: center;
 }
-.form-control:focus {
-    outline: none;
-    box-shadow: none;
-    border: 1px solid black;
-}

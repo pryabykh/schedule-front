@@ -1,9 +1,9 @@
 import { FiArrowUpRight } from 'react-icons/fi';
-import './Style.css';
+import style from './main-icon.module.css'
 
 function MainIcon() {
     return (
-        <FiArrowUpRight className="main-icon" />
+        <FiArrowUpRight className={style["main-icon"]} />
     );
 }
 

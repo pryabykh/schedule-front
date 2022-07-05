@@ -1,0 +1,28 @@
+.input-container {
+    margin-bottom: 27px;
+}
+.input:focus {
+    outline: none;
+    box-shadow: none;
+    border: 1px solid black;
+}
+
+.input-invalid {
+    outline: none;
+    box-shadow: none;
+    border: 1px solid rgb(252, 152, 152);
+}
+
+.show-invalid-text {
+    display: block;
+    color: rgb(252, 152, 152);
+    margin-bottom: -25px;
+    margin-left: 2px;
+}
+
+.hide-invalid-text {
+    display: none;
+}
+.label {
+    font-weight: 500;
+}

@@ -2,44 +2,54 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { login } from '../../../services/AuthService'
-import './Styles.css'
+import style from './login.module.css'
+import FormInput from '../../shared/FormInput/FormInput'
+import { EMAIL_INPUT_LABEL, EMAIL_INPUT_NAME, PASSWORD_INPUT_LABEL, PASSWORD_INPUT_NAME } from '../../../const/interface'
 
-function Form(props) {
-    const [email, setEmail] = useState(props.email);
-    const [password, setPassword] = useState(props.password);
+function Form() {
+    const [values, setValues] = useState({
+        email: "",
+        password: ""
+      });
 
-    const handleEmailChange = event => {
-        setEmail(event.target.value);
-    }
-
-    const handlePasswordChange = event => {
-        setPassword(event.target.value);
-    }
-
+    const inputs = [
+        {
+            key: 1,
+            id: EMAIL_INPUT_NAME,
+            name: EMAIL_INPUT_NAME,
+            label: EMAIL_INPUT_LABEL,
+            type: "email",
+        },
+        {
+            key: 2,
+            id: PASSWORD_INPUT_NAME,
+            name: PASSWORD_INPUT_NAME,
+            label: PASSWORD_INPUT_LABEL,
+            type: "password",
+        }
+    ]
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const handleSubmit = event => {
         event.preventDefault()
         const credentials = {
-            email,
-            password
+            ...values
         }
         login(credentials, navigate, dispatch)
     }
 
+    const onChange = (e) => {
+        setValues({ ...values, [e.target.name]: e.target.value });
+      };
+
     return (
-        <div className="login-form-container">
-        <form>
-            <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email</label>
-                <input value={email} onChange={handleEmailChange} type="email" className="form-control" id="email" name="email" />
-            </div>
-            <div className="mb-3">
-                <label htmlFor="password" className="form-label">Пароль</label>
-                <input value={password} onChange={handlePasswordChange} type="password" className="form-control" id="password" name="password" />
-            </div>
-            <button onClick={handleSubmit} type="submit" className="btn btn-dark">Войти</button>
+        <div className={style["login-form-container"]}>
+        <form onSubmit={handleSubmit}>
+        {inputs.map((input) => (
+                    <FormInput {...input} value={values[input.name]} onChange={onChange} />
+                ))}
+            <button type="submit" className="btn btn-dark">Войти</button>
         </form>
     </div> 
     );

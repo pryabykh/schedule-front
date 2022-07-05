@@ -1,6 +1,5 @@
 import { MAIN_HEADER, REGISTRATION_HEADER } from '../../../const/interface';
 import MainIcon from '../../shared/MainIcon/MainIcon';
-import './Styles.css';
 
 function Header() {
     return (
