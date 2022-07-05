@@ -6,7 +6,8 @@ import style from './registration.module.css'
 import FormInput from '../../shared/FormInput/FormInput';
 import { EMAIL_INPUT_LABEL, EMAIL_INPUT_NAME, EMAIL_INVALID_INPUT_MESSAGE, FIRST_NAME_INPUT_LABEL, FIRST_NAME_INPUT_NAME, FIRST_NAME_INVALID_INPUT_MESSAGE, LAST_NAME_INPUT_LABEL, LAST_NAME_INPUT_NAME, LAST_NAME_INVALID_INPUT_MESSAGE, PASSWORD_INPUT_LABEL, PASSWORD_INPUT_NAME, PASSWORD_INVALID_INPUT_MESSAGE } from '../../../const/interface'
 import { validate } from './FormValidation'
-import { INPUT_FOCUSED, INPUT_VALID, ON_CHANGE } from '../../../const/validation'
+import { INPUT_FOCUSED, INPUT_SHOW_VALIDATION_ERROR, INPUT_VALID, ON_BLUR, ON_CHANGE } from '../../../const/validation'
+import { INPUT_MAX_LENGTH } from '../../../const/inputs'
 
 function Form() {
     const dispatch = useDispatch()
@@ -14,15 +15,19 @@ function Form() {
     const validationStatus = {
         firstNameInputValid: useSelector((state) => state.rootReducer.registrationPageReducer[FIRST_NAME_INPUT_NAME + INPUT_VALID]),
         firstNameInputFocused: useSelector((state) => state.rootReducer.registrationPageReducer[FIRST_NAME_INPUT_NAME + INPUT_FOCUSED]),
+        firstNameInputShowValidationError: useSelector((state) => state.rootReducer.registrationPageReducer[FIRST_NAME_INPUT_NAME + INPUT_SHOW_VALIDATION_ERROR]),
 
         lastNameInputValid: useSelector((state) => state.rootReducer.registrationPageReducer[LAST_NAME_INPUT_NAME + INPUT_VALID]),
         lastNameInputFocused: useSelector((state) => state.rootReducer.registrationPageReducer[LAST_NAME_INPUT_NAME + INPUT_FOCUSED]),
+        lastNameInputShowValidationError: useSelector((state) => state.rootReducer.registrationPageReducer[LAST_NAME_INPUT_NAME + INPUT_SHOW_VALIDATION_ERROR]),
 
         emailInputValid: useSelector((state) => state.rootReducer.registrationPageReducer[EMAIL_INPUT_NAME + INPUT_VALID]),
         emailInputFocused: useSelector((state) => state.rootReducer.registrationPageReducer[EMAIL_INPUT_NAME + INPUT_FOCUSED]),
+        emailInputShowValidationError: useSelector((state) => state.rootReducer.registrationPageReducer[EMAIL_INPUT_NAME + INPUT_SHOW_VALIDATION_ERROR]),
 
         passwordInputValid: useSelector((state) => state.rootReducer.registrationPageReducer[PASSWORD_INPUT_NAME + INPUT_VALID]),
         passwordInputFocused: useSelector((state) => state.rootReducer.registrationPageReducer[PASSWORD_INPUT_NAME + INPUT_FOCUSED]),
+        passwordInputShowValidationError: useSelector((state) => state.rootReducer.registrationPageReducer[PASSWORD_INPUT_NAME + INPUT_SHOW_VALIDATION_ERROR]),
     }
 
     const [values, setValues] = useState({
@@ -41,7 +46,8 @@ function Form() {
             type: "text",
             valid: validationStatus['firstNameInputValid'],
             focused: validationStatus['firstNameInputFocused'],
-            invalidText: FIRST_NAME_INVALID_INPUT_MESSAGE
+            invalidText: FIRST_NAME_INVALID_INPUT_MESSAGE,
+            showValidationError: validationStatus['firstNameInputShowValidationError']
         },
         {
             key: 2,
@@ -51,7 +57,8 @@ function Form() {
             type: "text",
             valid: validationStatus['lastNameInputValid'],
             focused: validationStatus['lastNameInputFocused'],
-            invalidText: LAST_NAME_INVALID_INPUT_MESSAGE
+            invalidText: LAST_NAME_INVALID_INPUT_MESSAGE,
+            showValidationError: validationStatus['lastNameInputShowValidationError']
         },
         {
             key: 3,
@@ -61,7 +68,8 @@ function Form() {
             type: "email",
             valid: validationStatus['emailInputValid'],
             focused: validationStatus['emailInputFocused'],
-            invalidText: EMAIL_INVALID_INPUT_MESSAGE
+            invalidText: EMAIL_INVALID_INPUT_MESSAGE,
+            showValidationError: validationStatus['emailInputShowValidationError']
         },
         {
             key: 4,
@@ -71,7 +79,8 @@ function Form() {
             type: "password",
             valid: validationStatus['passwordInputValid'],
             focused: validationStatus['passwordInputFocused'],
-            invalidText: PASSWORD_INVALID_INPUT_MESSAGE
+            invalidText: PASSWORD_INVALID_INPUT_MESSAGE,
+            showValidationError: validationStatus['passwordInputShowValidationError']
         }
     ]
 
@@ -84,6 +93,7 @@ function Form() {
     }
 
     const onChange = (e) => {
+        if(e.target.value.length > INPUT_MAX_LENGTH) return;
         setValues({ ...values, [e.target.name]: e.target.value });
         const inputWasFocused = validationStatus[e.target.name + INPUT_FOCUSED]
         const inputWasValid = validationStatus[e.target.name + INPUT_VALID]
@@ -91,7 +101,9 @@ function Form() {
     };
 
     const onBlur = (e) => {
-        validate(e.target.name, e.target.value, dispatch)
+        const inputWasFocused = validationStatus[e.target.name + INPUT_FOCUSED]
+        const inputWasValid = validationStatus[e.target.name + INPUT_VALID]
+        validate(e.target.name, e.target.value, dispatch, inputWasFocused, inputWasValid, ON_BLUR)
     }
 
     const formValid = validationStatus.firstNameInputValid &&

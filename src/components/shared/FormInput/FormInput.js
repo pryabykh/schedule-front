@@ -2,14 +2,14 @@ import React from 'react'
 import cn from 'classnames';
 import style from "./input.module.css"
 
-function FormInput({ id, name, type, label, value, valid, invalidText, focused, onChange, onBlur }) {
+function FormInput({ id, name, type, label, value, valid, invalidText, focused, showValidationError, onChange, onBlur }) {
     const inputClassNames = cn('form-control', style.input, {
-        [style['input-invalid']]: (!valid && focused)
+        [style['input-invalid']]: (showValidationError && focused)
     })
 
     const invalidTextClassNames = cn('form-text', {
-        [style['show-invalid-text']]: (!valid && focused),
-        [style['hide-invalid-text']]: !(!valid && focused)
+        [style['show-invalid-text']]: (showValidationError && focused),
+        [style['hide-invalid-text']]: !(showValidationError && focused)
     })
 
     const labelClassNames = cn('form-label', style.label)
@@ -24,7 +24,7 @@ function FormInput({ id, name, type, label, value, valid, invalidText, focused, 
                 className={inputClassNames}
                 id={id}
                 name={name} />
-            {(!valid && focused) && (
+            {(showValidationError && focused) && (
                 <div className={invalidTextClassNames}>{invalidText}</div>
             )}
 
