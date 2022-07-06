@@ -5,6 +5,7 @@ const appSlice = createSlice({
     initialState: {
         showLoader: false,
         alertSuccessText: "",
+        alertWarningText: "",
         alertDangerText: ""
     },
     reducers: {
@@ -17,6 +18,9 @@ const appSlice = createSlice({
         setAlertSuccess: (state, action) => {
             state.alertSuccessText = action.payload;
         },
+        setAlertWarning: (state, action) => {
+            state.alertWarningText = action.payload;
+        },
         setAlertDanger: (state, action) => {
             state.alertDangerText = action.payload;
         }
@@ -28,6 +32,7 @@ export const {
     hideLoader, 
     setAlertSuccessText, 
     setAlertSuccess,
+    setAlertWarning,
     setAlertDanger
 } = appSlice.actions;
 

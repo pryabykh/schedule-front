@@ -19,13 +19,13 @@ function Form() {
     });
 
     const validationStatus = {
-        emailInputValid: useSelector((state) => state.rootReducer.registrationPageReducer[EMAIL_INPUT_NAME + INPUT_VALID]),
-        emailInputFocused: useSelector((state) => state.rootReducer.registrationPageReducer[EMAIL_INPUT_NAME + INPUT_FOCUSED]),
-        emailInputShowValidationError: useSelector((state) => state.rootReducer.registrationPageReducer[EMAIL_INPUT_NAME + INPUT_SHOW_VALIDATION_ERROR]),
+        emailInputValid: useSelector((state) => state.rootReducer.loginPageReducer[EMAIL_INPUT_NAME + INPUT_VALID]),
+        emailInputFocused: useSelector((state) => state.rootReducer.loginPageReducer[EMAIL_INPUT_NAME + INPUT_FOCUSED]),
+        emailInputShowValidationError: useSelector((state) => state.rootReducer.loginPageReducer[EMAIL_INPUT_NAME + INPUT_SHOW_VALIDATION_ERROR]),
 
-        passwordInputValid: useSelector((state) => state.rootReducer.registrationPageReducer[PASSWORD_INPUT_NAME + INPUT_VALID]),
-        passwordInputFocused: useSelector((state) => state.rootReducer.registrationPageReducer[PASSWORD_INPUT_NAME + INPUT_FOCUSED]),
-        passwordInputShowValidationError: useSelector((state) => state.rootReducer.registrationPageReducer[PASSWORD_INPUT_NAME + INPUT_SHOW_VALIDATION_ERROR]),
+        passwordInputValid: useSelector((state) => state.rootReducer.loginPageReducer[PASSWORD_INPUT_NAME + INPUT_VALID]),
+        passwordInputFocused: useSelector((state) => state.rootReducer.loginPageReducer[PASSWORD_INPUT_NAME + INPUT_FOCUSED]),
+        passwordInputShowValidationError: useSelector((state) => state.rootReducer.loginPageReducer[PASSWORD_INPUT_NAME + INPUT_SHOW_VALIDATION_ERROR]),
     }
 
     const inputs = [

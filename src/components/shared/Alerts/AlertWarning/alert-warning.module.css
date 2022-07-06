@@ -1,7 +1,7 @@
-.alert-success {
+.alert-warning {
     width: 500px;
 }
-.alert-success-container {
+.alert-warning-container {
     display: flex;
     align-items: center;
     justify-content: center;

@@ -2,7 +2,7 @@ import { login as apiLogin } from "../api/AuthApi";
 import { FORBIDDEN_MESSAGE, SOMETHING_WENT_WRONG_MESSAGE } from "../const/interface";
 import { ACCESS_DATA, ACCESS_EXPIRES_AT, ACCESS_TOKEN, REFRESH_EXPIRES_AT, REFRESH_TOKEN } from "../const/local-storage";
 import { LK_ROUTE } from "../const/routes";
-import { hideLoader, setAlertDanger, setAlertSuccess, showLoader } from "../store/appSlice";
+import { hideLoader, setAlertDanger, setAlertSuccess, setAlertWarning, showLoader } from "../store/appSlice";
 
 export const login = async (credentials, navigate, dispatch) => {
     dispatch(showLoader())
@@ -25,6 +25,7 @@ export const login = async (credentials, navigate, dispatch) => {
         const content = await response.json();
         setTokenToLocalStorage(content)
         dispatch(setAlertDanger(""))
+        dispatch(setAlertWarning(""))
         dispatch(hideLoader())
         navigate(LK_ROUTE)
     }
@@ -42,12 +43,14 @@ export const login = async (credentials, navigate, dispatch) => {
     const doForbidden = () => {
         dispatch(hideLoader())
         dispatch(setAlertSuccess(""))
+        dispatch(setAlertWarning(""))
         dispatch(setAlertDanger(FORBIDDEN_MESSAGE))
     }
 
     const doFail = () => {
         dispatch(hideLoader())
         dispatch(setAlertSuccess(""))
+        dispatch(setAlertWarning(""))
         dispatch(setAlertDanger(SOMETHING_WENT_WRONG_MESSAGE))
     }
 }

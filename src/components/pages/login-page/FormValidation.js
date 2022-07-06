@@ -1,6 +1,6 @@
 import { EMAIL_INPUT_NAME, PASSWORD_INPUT_NAME } from '../../../const/inputs'
 import { ON_BLUR, ON_CHANGE } from "../../../const/validation";
-import { hideValidationError, setInputInvalid, setInputValid, setInputWasFocused, showValidationError } from "../../../store/registrationPageSlice";
+import { hideValidationError, setInputInvalid, setInputValid, setInputWasFocused, showValidationError } from "../../../store/loginPageSlice";
 
 export const validate = (inputName, inputValue, dispatch, inputWasFocused, inputWasValid, action) => {
     let currentInputIsValid = false;
