@@ -11,12 +11,7 @@ export const LAST_NAME_INPUT_LABEL = "Фамилия"
 export const EMAIL_INPUT_LABEL = "Email"
 export const PASSWORD_INPUT_LABEL = "Пароль"
 
-export const FIRST_NAME_INPUT_NAME = "firstName"
-export const LAST_NAME_INPUT_NAME = "lastName"
-export const EMAIL_INPUT_NAME = "email"
-export const PASSWORD_INPUT_NAME = "password"
-
 export const FIRST_NAME_INVALID_INPUT_MESSAGE = "Поле Имя не должно быть пустым"
 export const LAST_NAME_INVALID_INPUT_MESSAGE = "Поле Фамилия не должно быть пустым"
-export const EMAIL_INVALID_INPUT_MESSAGE = "Поле Email должно содержать корректный Email адрес"
+export const EMAIL_INVALID_INPUT_MESSAGE = "Поле Email должно содержать корректный email адрес"
 export const PASSWORD_INVALID_INPUT_MESSAGE = "Пароль должен содержать минимум 6 символов"

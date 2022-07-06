@@ -4,14 +4,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import { register } from '../../../services/UserService'
 import style from './registration.module.css'
 import FormInput from '../../shared/FormInput/FormInput';
-import { EMAIL_INPUT_LABEL, EMAIL_INPUT_NAME, EMAIL_INVALID_INPUT_MESSAGE, FIRST_NAME_INPUT_LABEL, FIRST_NAME_INPUT_NAME, FIRST_NAME_INVALID_INPUT_MESSAGE, LAST_NAME_INPUT_LABEL, LAST_NAME_INPUT_NAME, LAST_NAME_INVALID_INPUT_MESSAGE, PASSWORD_INPUT_LABEL, PASSWORD_INPUT_NAME, PASSWORD_INVALID_INPUT_MESSAGE } from '../../../const/interface'
+import { EMAIL_INPUT_LABEL, EMAIL_INVALID_INPUT_MESSAGE, FIRST_NAME_INPUT_LABEL, FIRST_NAME_INVALID_INPUT_MESSAGE, LAST_NAME_INPUT_LABEL, LAST_NAME_INVALID_INPUT_MESSAGE, PASSWORD_INPUT_LABEL, PASSWORD_INVALID_INPUT_MESSAGE } from '../../../const/interface'
 import { validate } from './FormValidation'
 import { INPUT_FOCUSED, INPUT_SHOW_VALIDATION_ERROR, INPUT_VALID, ON_BLUR, ON_CHANGE } from '../../../const/validation'
-import { INPUT_MAX_LENGTH } from '../../../const/inputs'
+import { EMAIL_INPUT_NAME, FIRST_NAME_INPUT_NAME, INPUT_MAX_LENGTH, LAST_NAME_INPUT_NAME, PASSWORD_INPUT_NAME } from '../../../const/inputs'
 
 function Form() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const [values, setValues] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: ""
+    });
+
     const validationStatus = {
         firstNameInputValid: useSelector((state) => state.rootReducer.registrationPageReducer[FIRST_NAME_INPUT_NAME + INPUT_VALID]),
         firstNameInputFocused: useSelector((state) => state.rootReducer.registrationPageReducer[FIRST_NAME_INPUT_NAME + INPUT_FOCUSED]),
@@ -29,13 +37,6 @@ function Form() {
         passwordInputFocused: useSelector((state) => state.rootReducer.registrationPageReducer[PASSWORD_INPUT_NAME + INPUT_FOCUSED]),
         passwordInputShowValidationError: useSelector((state) => state.rootReducer.registrationPageReducer[PASSWORD_INPUT_NAME + INPUT_SHOW_VALIDATION_ERROR]),
     }
-
-    const [values, setValues] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: ""
-    });
 
     const inputs = [
         {
@@ -93,7 +94,7 @@ function Form() {
     }
 
     const onChange = (e) => {
-        if(e.target.value.length > INPUT_MAX_LENGTH) return;
+        if(e.target.value.length > INPUT_MAX_LENGTH) return; //!!!
         setValues({ ...values, [e.target.name]: e.target.value });
         const inputWasFocused = validationStatus[e.target.name + INPUT_FOCUSED]
         const inputWasValid = validationStatus[e.target.name + INPUT_VALID]
