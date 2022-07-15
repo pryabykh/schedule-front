@@ -26,6 +26,7 @@ export const login = async (credentials, navigate, dispatch) => {
         setTokenToLocalStorage(content)
         dispatch(setAlertDanger(""))
         dispatch(setAlertWarning(""))
+        dispatch(setAlertSuccess(""))
         dispatch(hideLoader())
         navigate(LK_ROUTE)
     }

@@ -1,8 +1,17 @@
 import React from 'react';
+import CardLink from '../../shared/CardLink/CardLink';
+import Header from '../../shared/Header/Header';
 
 function LkPage() {
     return (
-        <h1>Личный кабинет</h1>
+        <>
+        <Header />
+        <h1 className='container'>Личный кабинет</h1>
+        <div className='container'>
+        <CardLink /> <CardLink /> <CardLink /> <CardLink /> <CardLink />
+        </div>
+        
+        </>
     );
 }
 
