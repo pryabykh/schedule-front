@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { fetchAll } from '../../../services/ClassroomService/FetchAllClassroomService';
 import Header from '../../shared/Header/Header';
 import FilterForm from './FilterForm';
 
 function ClassroomPage() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const pageSize = {
+      "page": 0,
+      "size": 5
+    }
+    fetchAll(pageSize, navigate, dispatch)
+  }, []);
+
+
     return (
         <>
         <Header />

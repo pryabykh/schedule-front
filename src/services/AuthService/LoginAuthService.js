@@ -1,8 +1,8 @@
-import { login as apiLogin } from "../api/AuthApi";
-import { FORBIDDEN_MESSAGE, SOMETHING_WENT_WRONG_MESSAGE } from "../const/interface";
-import { ACCESS_DATA, ACCESS_EXPIRES_AT, ACCESS_TOKEN, REFRESH_EXPIRES_AT, REFRESH_TOKEN } from "../const/local-storage";
-import { LK_ROUTE } from "../const/routes";
-import { hideLoader, setAlertDanger, setAlertSuccess, setAlertWarning, showLoader } from "../store/appSlice";
+import { login as apiLogin } from "../../api/AuthApi";
+import { FORBIDDEN_MESSAGE, SOMETHING_WENT_WRONG_MESSAGE } from "../../const/interface";
+import { ACCESS_DATA, ACCESS_EXPIRES_AT, ACCESS_TOKEN, REFRESH_EXPIRES_AT, REFRESH_TOKEN } from "../../const/local-storage";
+import { LK_ROUTE } from "../../const/routes";
+import { hideLoader, setAlertDanger, setAlertSuccess, setAlertWarning, showLoader } from "../../store/appSlice";
 
 export const login = async (credentials, navigate, dispatch) => {
     dispatch(showLoader())

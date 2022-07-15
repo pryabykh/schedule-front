@@ -11,3 +11,15 @@ export const login = async (credentials) => {
     });
     return response;
   }
+
+  export const refresh = async (refreshToken) => {
+    const response = await fetch(AUTH_API_HOST + '/v1/auth/refresh', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(refreshToken)
+    });
+    return response;
+  }

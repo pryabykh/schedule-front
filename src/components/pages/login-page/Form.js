@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { login } from '../../../services/AuthService'
+import { login } from '../../../services/AuthService/LoginAuthService'
 import style from './login.module.css'
 import FormInput from '../../shared/FormInput/FormInput'
 import { EMAIL_INPUT_LABEL, EMAIL_INVALID_INPUT_MESSAGE, PASSWORD_INPUT_LABEL, PASSWORD_INVALID_INPUT_MESSAGE } from '../../../const/interface'
