@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../../shared/Header/Header';
+import FilterForm from './FilterForm';
 
 function ClassroomPage() {
     return (
@@ -8,6 +9,7 @@ function ClassroomPage() {
         <h1 className='container mt-2 mb-2'>Кабинеты</h1>
         <div className='container'>
         <button type="button" className="btn btn-success mt-2 mb-3">Добавить</button>
+        <FilterForm />
 
         <table className="table">
   <thead>

@@ -1,11 +1,37 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from "react-router-dom";
-import { MAIN_HEADER } from '../../../const/interface';
+import { FILES_NAV_ITEM, MAIN_HEADER, REPORT_NAV_ITEM, SCHEDULE_NAV_ITEM } from '../../../const/interface';
 import { LK_ROUTE, SCHEDULE_ROUTE } from '../../../const/routes';
+import { setActiveNavItemKey } from '../../../store/appSlice';
 import MainIcon from '../MainIcon/MainIcon';
 import style from "./navbar.module.css"
 
 function Navbar() {
+    const activeNavItemKey = useSelector((state) => state.rootReducer.appReducer['activeNavItemKey'])
+    const dispatch = useDispatch()
+
+    const navItems = [
+        {
+            key: 1,
+            text: SCHEDULE_NAV_ITEM,
+            link: SCHEDULE_ROUTE,
+        },
+        {
+            key: 2,
+            text: REPORT_NAV_ITEM,
+            link: LK_ROUTE,
+        },
+        {
+            key: 3,
+            text: FILES_NAV_ITEM,
+            link: LK_ROUTE,
+        }
+    ]
+
+    const onNavClick = (key) => (e) => {
+        dispatch(setActiveNavItemKey(key))
+    };
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark container">
             <div className="container-fluid">
@@ -15,23 +41,19 @@ function Navbar() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav">
-                        <li className="nav-item">
-                            <Link to={SCHEDULE_ROUTE} className="nav-link active">Расписание</Link>
-                        </li>
-                        <li className="nav-item">
-                        <Link to={LK_ROUTE} className="nav-link">Отчет</Link>
-                        </li>
-                        <li className="nav-item">
-                        <Link to={LK_ROUTE} className="nav-link">Мои файлы</Link>
-                        </li>
+                        {navItems.map(({ key, link, text, active }) => (
+                            <li key={key} className="nav-item">
+                                <Link to={link} onClick={onNavClick(key)} className={`nav-link ${activeNavItemKey === key ? 'active' : ''}`}>{text}</Link>
+                            </li>
+                        ))}
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Ещё
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a className="dropdown-item" href="#">Action</a></li>
-                                <li><a className="dropdown-item" href="#">Another action</a></li>
-                                <li><a className="dropdown-item" href="#">Something else here</a></li>
+                                <li><Link to="/" onClick={onNavClick(4)} className="dropdown-item">Action</Link></li>
+                                <li><Link to="/" onClick={onNavClick(4)} className="dropdown-item">Another action</Link></li>
+                                <li><Link to="/" onClick={onNavClick(4)} className="dropdown-item">Something else here</Link></li>
                             </ul>
                         </li>
                     </ul>

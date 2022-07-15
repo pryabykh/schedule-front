@@ -6,7 +6,8 @@ const appSlice = createSlice({
         showLoader: false,
         alertSuccessText: "",
         alertWarningText: "",
-        alertDangerText: ""
+        alertDangerText: "",
+        activeNavItemKey: 1
     },
     reducers: {
         showLoader: (state, action) => {
@@ -23,6 +24,9 @@ const appSlice = createSlice({
         },
         setAlertDanger: (state, action) => {
             state.alertDangerText = action.payload;
+        },
+        setActiveNavItemKey: (state, action) => {
+            state.activeNavItemKey = action.payload;
         }
     },
 });
@@ -33,7 +37,8 @@ export const {
     setAlertSuccessText, 
     setAlertSuccess,
     setAlertWarning,
-    setAlertDanger
+    setAlertDanger,
+    setActiveNavItemKey
 } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -16,3 +16,7 @@ export const FIRST_NAME_INVALID_INPUT_MESSAGE = "Поле Имя не должн
 export const LAST_NAME_INVALID_INPUT_MESSAGE = "Поле Фамилия не должно быть пустым"
 export const EMAIL_INVALID_INPUT_MESSAGE = "Поле Email должно содержать корректный email адрес"
 export const PASSWORD_INVALID_INPUT_MESSAGE = "Пароль должен содержать минимум 6 символов"
+
+export const SCHEDULE_NAV_ITEM = "Расписание"
+export const REPORT_NAV_ITEM = "Отчет"
+export const FILES_NAV_ITEM = "Мои файлы"
