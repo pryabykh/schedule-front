@@ -7,24 +7,10 @@ import { logout } from "../AuthService/LogoutAuthService";
 import { refresh } from "../AuthService/RefreshAuthService";
 
 export const fetchAll = async (pageSize, navigate, dispatch) => {
-    if(!tokenExisting()) {
-        logout(navigate)
+    if(!tokenExists()) {
+        logout(navigate, dispatch)
         return;
     }
-    dispatch(showLoader())
-    apiFetchAll(pageSize).then((response) => {
-        if(response.ok) {
-            doSuccess(response)
-        } else if(response.status === 401) {
-            console.log("GOt 401")
-            refresh(navigate)
-            fetchAll(pageSize, navigate, dispatch)
-        } else {
-            doFail()
-        }
-    }, () => {
-        doFail()
-    })
 
     const doSuccess = async (response) => {
         const content = await response.json();
@@ -41,12 +27,30 @@ export const fetchAll = async (pageSize, navigate, dispatch) => {
         dispatch(setAlertDanger(SOMETHING_WENT_WRONG_MESSAGE))
         dispatch(hideLoader())
     }
+
+    dispatch(showLoader())
+    apiFetchAll(pageSize).then((response) => {
+        if(response.ok) {
+            doSuccess(response)
+        } else if(response.status === 401) {
+            console.log("GOt 401")
+            refresh(navigate, dispatch).then(() => {
+                fetchAll(pageSize, navigate, dispatch)
+            });
+        } else {
+            doFail()
+        }
+    }, () => {
+        doFail()
+    })
 }
 
-const tokenExisting = () => {
-    if(JSON.parse(localStorage.getItem(ACCESS_DATA))[ACCESS_TOKEN]) {
+const tokenExists = () => {
+    if(JSON.parse(localStorage.getItem(ACCESS_DATA))) {
+        console.log("Token exists: " + JSON.parse(localStorage.getItem(ACCESS_DATA)))
         return true;
     } else {
+        console.log("Token does not exist")
         return false;
     }
 }

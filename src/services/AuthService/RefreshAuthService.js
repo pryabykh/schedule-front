@@ -3,22 +3,10 @@ import { ACCESS_DATA, ACCESS_EXPIRES_AT, ACCESS_TOKEN, REFRESH_EXPIRES_AT, REFRE
 import { LOGIN_ROUTE } from "../../const/routes";
 import { logout } from "./LogoutAuthService";
 
-export const refresh = async (navigate) => {
+export const refresh = async (navigate, dispatch) => {
     const refreshToken = {
         "refreshToken": JSON.parse(localStorage.getItem(ACCESS_DATA))[REFRESH_TOKEN]
     }
-    apiRefresh(refreshToken).then(
-        (response) => {
-            if(response.ok) {
-                doSuccess(response)
-            }  else {
-                doFail()
-            }
-        },
-        () => {
-            doFail()
-        }
-    )
 
     const doSuccess = async (response) => {
         const content = await response.json();
@@ -36,6 +24,19 @@ export const refresh = async (navigate) => {
     }
 
     const doFail = () => {
-        logout(navigate)
+        logout(navigate, dispatch)
     }
+
+    return apiRefresh(refreshToken).then(
+        async (response) => {
+            if(response.ok) {
+                await doSuccess(response)
+            }  else {
+                doFail()
+            }
+        },
+        () => {
+            doFail()
+        }
+    )
 }
