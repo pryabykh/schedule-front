@@ -23,7 +23,11 @@ function Table() {
                             <th scope="row">{classroom.number}</th>
                             <td>{classroom.capacity}</td>
                             <td>{classroom.description}</td>
-                            <td>Надо добавить!</td>
+                            <td>{classroom.inCharge === null ? "-" :
+                                classroom.inCharge.lastName + " " +
+                                classroom.inCharge.firstName + " " +
+                                classroom.inCharge.patronymic}
+                            </td>
                         </tr>
                     ))}
                 </tbody>
