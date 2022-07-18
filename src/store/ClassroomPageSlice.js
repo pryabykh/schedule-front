@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { DEFAULT_SIZE_OF_PAGE } from '../const/pagination';
 
 const classroomPageSlice = createSlice({
     name: 'classroomPage',
     initialState: {
         classrooms: [],
         pageSizeRequest: {},
+        sizeOfPage: DEFAULT_SIZE_OF_PAGE,
         totalElements: 0,
         totalPages: 0,
         currentPage: 0

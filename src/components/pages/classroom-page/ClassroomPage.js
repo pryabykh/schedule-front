@@ -17,7 +17,7 @@ function ClassroomPage() {
   useEffect(() => {
     const pageSize = {
       "page": 0,
-      "size": DEFAULT_SIZE_OF_PAGE
+      "size": sizeOfPage
     }
     fetchAll(pageSize, navigate, dispatch)
   }, []);

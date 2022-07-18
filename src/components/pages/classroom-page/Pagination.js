@@ -13,6 +13,7 @@ function Pagination() {
     const totalPages = useSelector((state) => state.rootReducer.classroomPageReducer['totalPages']);
     const currentPage = useSelector((state) => state.rootReducer.classroomPageReducer['currentPage']);
     const lastPageSizeRequest = useSelector((state) => state.rootReducer.classroomPageReducer['pageSizeRequest']);
+    const sizeOfPage = useSelector((state) => state.rootReducer.classroomPageReducer['sizeOfPage']);
 
     const pages = []
     for (let i = 0; i < totalPages; i++) {
@@ -29,27 +30,27 @@ function Pagination() {
         const pageSize = {
             ...lastPageSizeRequest,
             page: page,
-            pageSize: DEFAULT_SIZE_OF_PAGE
+            pageSize: sizeOfPage
         }
         fetchAll(pageSize, navigate, dispatch)
     }
 
     const goToPreviousPage = (event) => {
-        if(isFirstPage) return;
+        if (isFirstPage) return;
         const pageSize = {
             ...lastPageSizeRequest,
             page: currentPage - 1,
-            pageSize: DEFAULT_SIZE_OF_PAGE
+            pageSize: sizeOfPage
         }
         fetchAll(pageSize, navigate, dispatch)
     }
 
     const goToNextPage = (event) => {
-        if(isLastPage) return;
+        if (isLastPage) return;
         const pageSize = {
             ...lastPageSizeRequest,
             page: currentPage + 1,
-            pageSize: DEFAULT_SIZE_OF_PAGE
+            pageSize: sizeOfPage
         }
         fetchAll(pageSize, navigate, dispatch)
     }
@@ -58,23 +59,28 @@ function Pagination() {
         <>
             <nav>
                 <ul className="pagination justify-content-center">
-                    <li onClick={goToPreviousPage} className="page-item">
-                        <a className={`page-link ${isFirstPage ? 'disabled' : ''}`} href="#" aria-label="Previous">
+                    <li onClick={goToPreviousPage} className={cn('page-item', style['cursor-pointer'])}>
+                        <div className={`page-link ${isFirstPage ? 'disabled' : ''}`} aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
-                        </a>
+                        </div>
                     </li>
                     {pages.map((page) => (
-                        <li key={page.viewNumber} onClick={goToPage(page.pageNumber)} className={`page-item ${page.active ? 'active' : ''}`}>
-                            <a className="page-link" href="#">{page.viewNumber}</a>
+                        <li
+                            key={page.viewNumber}
+                            onClick={goToPage(page.pageNumber)}
+                            className={`page-item ${page.active ? 'active' : ''} ${style['cursor-pointer']}`}>
+                            <div className="page-link">{page.viewNumber}</div>
                         </li>
                     ))}
-                    <li onClick={goToNextPage} className="page-item">
-                        <a className={`page-link ${isLastPage ? 'disabled' : ''}`} href="#" aria-label="Next">
+                    <li onClick={goToNextPage} className={cn('page-item', style['cursor-pointer'])}>
+                        <div className={`page-link ${isLastPage ? 'disabled' : ''}`} aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
-                        </a>
+                        </div>
                     </li>
                 </ul>
+
             </nav>
+            <span><b>Всего: {totalElements}</b></span>
         </>
     );
 }
