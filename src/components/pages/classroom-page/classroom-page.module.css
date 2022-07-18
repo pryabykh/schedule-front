@@ -1,0 +1,8 @@
+.active-page-item {
+    width: 100px;
+    background-color: black;
+    color: red;
+}
+.pagination {
+    color: red;
+}

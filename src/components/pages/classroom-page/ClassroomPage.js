@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { DEFAULT_SIZE_OF_PAGE } from '../../../const/pagination';
 import { fetchAll } from '../../../services/ClassroomService/FetchAllClassroomService';
 import Header from '../../shared/Header/Header';
+import Loader from '../../shared/Loader/Loader';
 import FilterForm from './FilterForm';
+import Pagination from './Pagination';
+import Table from './Table';
 
 function ClassroomPage() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const sizeOfPage = useSelector((state) => state.rootReducer.classroomPageReducer['sizeOfPage']);
 
   useEffect(() => {
     const pageSize = {
       "page": 0,
-      "size": 5
+      "size": DEFAULT_SIZE_OF_PAGE
     }
     fetchAll(pageSize, navigate, dispatch)
   }, []);
@@ -20,42 +25,14 @@ function ClassroomPage() {
 
     return (
         <>
+        <Loader />
         <Header />
-        <h1 className='container mt-2 mb-2'>Кабинеты</h1>
         <div className='container'>
+        <h1 className='mt-2 mb-2'>Кабинеты</h1>
         <button type="button" className="btn btn-success mt-2 mb-3">Добавить</button>
         <FilterForm />
-
-        <table className="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
-
+        <Table />
+        <Pagination />
         </div>
         
         </>

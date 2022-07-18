@@ -20,3 +20,10 @@ export const PASSWORD_INVALID_INPUT_MESSAGE = "Пароль должен сод�
 export const SCHEDULE_NAV_ITEM = "Расписание"
 export const REPORT_NAV_ITEM = "Отчет"
 export const FILES_NAV_ITEM = "Мои файлы"
+
+export const LIST_OF_DATA_IS_EMPTY_FOR_TABLE_MESSAGE = "Пока нет данных"
+
+export const CLASSROOM_NUMBER_TABLE_HEADER = "Номер"
+export const CLASSROOM_CAPACITY_TABLE_HEADER = "Вместимость"
+export const CLASSROOM_DESCRIPTION_TABLE_HEADER = "Описание"
+export const CLASSROOM_IN_CHARGE_TABLE_HEADER = "Заведующий"
