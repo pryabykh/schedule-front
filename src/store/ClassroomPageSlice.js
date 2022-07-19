@@ -22,14 +22,14 @@ const classroomPageSlice = createSlice({
             state.totalElements = action.payload.totalElements;
             state.totalPages = action.payload.totalPages;
             state.currentPage = action.payload.currentPage;
-        }
+        },
     },
 });
 
 export const { 
     setClassrooms,
     setPageSizeRequest,
-    setPages
+    setPages,
 } = classroomPageSlice.actions;
 
 export default classroomPageSlice.reducer;

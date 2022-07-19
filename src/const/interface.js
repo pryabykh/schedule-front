@@ -21,7 +21,8 @@ export const SCHEDULE_NAV_ITEM = "Расписание"
 export const REPORT_NAV_ITEM = "Отчет"
 export const FILES_NAV_ITEM = "Мои файлы"
 
-export const LIST_OF_DATA_IS_EMPTY_FOR_TABLE_MESSAGE = "Пока нет данных"
+export const LIST_OF_DATA_IS_EMPTY_FOR_TABLE_MESSAGE = "Нет данных"
+export const FILTER_CRITERIA_OR_FILTER_VALUE_IS_EMPTY_MESSAGE = "Необходимо выбрать критерий для фильтрации и заполнить поле"
 
 export const CLASSROOM_NUMBER_TABLE_HEADER = "Номер"
 export const CLASSROOM_CAPACITY_TABLE_HEADER = "Вместимость"
