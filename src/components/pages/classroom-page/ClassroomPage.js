@@ -7,6 +7,7 @@ import Header from '../../shared/Header/Header';
 import Loader from '../../shared/Loader/Loader';
 import FilterForm from './FilterForm';
 import Pagination from './Pagination';
+import SortByIdComponent from './SortByIdComponent';
 import Table from './Table';
 
 function ClassroomPage() {
@@ -17,7 +18,9 @@ function ClassroomPage() {
   useEffect(() => {
     const pageSize = {
       "page": 0,
-      "size": sizeOfPage
+      "size": sizeOfPage,
+      "sortBy": "id",
+      "sortDirection": "desc"
     }
     fetchAll(pageSize, navigate, dispatch)
   }, []);
@@ -31,6 +34,7 @@ function ClassroomPage() {
         <h1 className='mt-2 mb-2'>Кабинеты</h1>
         <button type="button" className="btn btn-success mt-2 mb-3">Добавить</button>
         <FilterForm />
+        <SortByIdComponent />
         <Table />
         <Pagination />
         </div>

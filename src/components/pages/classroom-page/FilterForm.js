@@ -6,6 +6,7 @@ import { CLASSROOM_CAPACITY_TABLE_HEADER, CLASSROOM_DESCRIPTION_TABLE_HEADER, CL
 import { fetchAll } from '../../../services/ClassroomService/FetchAllClassroomService';
 import cn from 'classnames'
 import style from './classroom-page.module.css'
+import { CLASSROOM_CAPACITY_FILTER_ID, CLASSROOM_DESCRIPTION_FILTER_ID, CLASSROOM_NUMBER_FILTER_ID, CLASSROOM_TEACHER_FILTER_ID } from '../../../const/system';
 
 function FilterForm() {
 
@@ -20,22 +21,22 @@ function FilterForm() {
         {
             key: 1,
             view: CLASSROOM_NUMBER_TABLE_HEADER,
-            filterId: "number"
+            filterId: CLASSROOM_NUMBER_FILTER_ID
         },
         {
             key: 2,
             view: CLASSROOM_CAPACITY_TABLE_HEADER,
-            filterId: "capacity"
+            filterId: CLASSROOM_CAPACITY_FILTER_ID
         },
         {
             key: 3,
             view: CLASSROOM_DESCRIPTION_TABLE_HEADER,
-            filterId: "description"
+            filterId: CLASSROOM_DESCRIPTION_FILTER_ID
         },
         {
             key: 4,
             view: CLASSROOM_IN_CHARGE_TABLE_HEADER,
-            filterId: "incharge"
+            filterId: CLASSROOM_TEACHER_FILTER_ID
         }
     ]
 

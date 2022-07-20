@@ -23,6 +23,8 @@ export const FILES_NAV_ITEM = "Мои файлы"
 
 export const LIST_OF_DATA_IS_EMPTY_FOR_TABLE_MESSAGE = "Нет данных"
 export const FILTER_CRITERIA_OR_FILTER_VALUE_IS_EMPTY_MESSAGE = "Необходимо выбрать критерий для фильтрации и заполнить поле"
+export const SORT_BY_NEW_ITEM = "Сначала новые"
+export const SORT_BY_OLD_ITEM = "Сначала старые"
 
 export const CLASSROOM_NUMBER_TABLE_HEADER = "Номер"
 export const CLASSROOM_CAPACITY_TABLE_HEADER = "Вместимость"

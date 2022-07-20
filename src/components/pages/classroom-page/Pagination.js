@@ -80,7 +80,7 @@ function Pagination() {
                 </ul>
 
             </nav>
-            <span><b>Всего: {totalElements}</b></span>
+            <div className={style['total-elements']}><b>Всего: {totalElements}</b></div>
         </>
     );
 }
