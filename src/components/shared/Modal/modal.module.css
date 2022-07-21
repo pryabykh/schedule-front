@@ -2,12 +2,12 @@
     position: fixed;
     width: 100%;
     height: 100%;
-    z-index: 9999;
+    z-index: 9997;
     background: rgb(255, 255, 255);
     opacity: .8;
 }
 
 .create-modal-show {
     display: block;
-    z-index: 99999;
+    z-index: 9998;
 }

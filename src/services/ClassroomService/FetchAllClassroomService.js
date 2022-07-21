@@ -35,7 +35,7 @@ export const fetchAll = async (pageSize, navigate, dispatch) => {
     }
 
     dispatch(showLoader())
-    apiFetchAll(pageSize).then((response) => {
+    return apiFetchAll(pageSize).then((response) => {
         if(response.ok) {
             doSuccess(response)
         } else if(response.status === 401) {

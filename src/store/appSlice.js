@@ -4,6 +4,7 @@ const appSlice = createSlice({
     name: 'app',
     initialState: {
         showLoader: false,
+        loaderCount: 0,
         alertSuccessText: "",
         alertWarningText: "",
         alertDangerText: "",
@@ -11,10 +12,14 @@ const appSlice = createSlice({
     },
     reducers: {
         showLoader: (state, action) => {
+            state.loaderCount = state.loaderCount + 1
             state.showLoader = true;
         },
         hideLoader: (state, action) => {
-            state.showLoader = false;
+            state.loaderCount = state.loaderCount - 1
+            if(state.loaderCount === 0) {
+                state.showLoader = false;
+            }
         },
         setAlertSuccess: (state, action) => {
             state.alertSuccessText = action.payload;

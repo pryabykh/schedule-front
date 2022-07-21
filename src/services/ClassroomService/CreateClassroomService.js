@@ -39,9 +39,10 @@ export const create = async (classroom, lastPageSizeRequest, navigate, dispatch)
     return apiCreate(classroom).then((response) => {
         if(response.ok) {
             doSuccess(response)
-            fetchAll(lastPageSizeRequest, navigate, dispatch)
-            dispatch(hideCreateModal())
-            dispatch(resetCreateForm())
+            fetchAll(lastPageSizeRequest, navigate, dispatch).then(() => {
+                dispatch(hideCreateModal())
+                dispatch(resetCreateForm())
+            })
         } else if(response.status === 401) {
             refresh(navigate, dispatch).then(() => {
                 create(classroom, navigate, dispatch)
