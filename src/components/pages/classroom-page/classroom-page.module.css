@@ -3,6 +3,7 @@
     background-color: black;
     color: red;
 }
+
 .pagination {
     color: red;
 }
@@ -31,9 +32,7 @@
     font-weight: 400;
 }
 
-.sort-by-id-button-new {
-
-}
+.sort-by-id-button-new {}
 
 .sort-by-id-button-old {
     margin-left: 10px;

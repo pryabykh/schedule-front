@@ -27,6 +27,11 @@ const appSlice = createSlice({
         },
         setActiveNavItemKey: (state, action) => {
             state.activeNavItemKey = action.payload;
+        },
+        resetAlerts: (state, action) => {
+            state.alertSuccessText = "";
+            state.alertWarningText = "";
+            state.alertDangerText = "";
         }
     },
 });
@@ -38,6 +43,7 @@ export const {
     setAlertSuccess,
     setAlertWarning,
     setAlertDanger,
+    resetAlerts,
     setActiveNavItemKey
 } = appSlice.actions;
 

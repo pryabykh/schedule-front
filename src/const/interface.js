@@ -30,3 +30,13 @@ export const CLASSROOM_NUMBER_TABLE_HEADER = "Номер"
 export const CLASSROOM_CAPACITY_TABLE_HEADER = "Вместимость"
 export const CLASSROOM_DESCRIPTION_TABLE_HEADER = "Описание"
 export const CLASSROOM_IN_CHARGE_TABLE_HEADER = "Заведующий"
+
+export const CLASSROOM_NUMBER_INPUT_LABEL = "Номер"
+export const CLASSROOM_CAPACITY_INPUT_LABEL = "Вместимость"
+export const CLASSROOM_DESCRIPTION_INPUT_LABEL = "Описание"
+export const CLASSROOM_TEACHER_INPUT_LABEL = "Заведующий"
+
+export const CLASSROOM_NUMBER_INVALID_INPUT_MESSAGE = "Поле Номер не должно быть пустым"
+export const CLASSROOM_CAPACITY_INVALID_INPUT_MESSAGE = "Поле Вместимость должно быть числом больше единицы"
+export const CLASSROOM_DESCRIPTION_INVALID_INPUT_MESSAGE = "Поле Описание не должно быть пустым"
+export const CONFLICT_CLASSROOM_MESSAGE = "Кабинет с таким номером уже существует в системе."
