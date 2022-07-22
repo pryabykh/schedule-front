@@ -45,6 +45,7 @@ export const create = async (classroom, lastPageSizeRequest, navigate, dispatch)
             })
         } else if(response.status === 401) {
             refresh(navigate, dispatch).then(() => {
+                dispatch(hideLoader())
                 create(classroom, navigate, dispatch)
             });
         } else if(response.status === 409) {

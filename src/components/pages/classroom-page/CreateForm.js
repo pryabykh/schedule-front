@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import style from './classroom-page.module.css';
@@ -11,8 +11,10 @@ import { validate } from './FormValidation';
 import { create } from '../../../services/ClassroomService/CreateClassroomService';
 import AlertWarning from '../../shared/Alerts/AlertWarning/AlertWarning';
 import AlertDanger from '../../shared/Alerts/AlertDanger/AlertDanger';
-import { hideCreateModal, resetCreateForm } from '../../../store/ClassroomPageSlice';
+import { hideCreateModal, resetCreateForm, setChangedTeachers, setTeachers } from '../../../store/ClassroomPageSlice';
 import { resetAlerts } from '../../../store/appSlice';
+import DataList from '../../shared/DataList/DataList';
+import { fetchAllList } from '../../../services/TeacherService/FetchAllListTeacherService';
 
 function CreateForm() {
     const dispatch = useDispatch()
@@ -24,6 +26,13 @@ function CreateForm() {
         description: "",
         teacher: ""
     });
+    
+    const teachers = useSelector((state) => state.rootReducer.classroomPageReducer['teachers']);
+    const changedTeachers = useSelector((state) => state.rootReducer.classroomPageReducer['changedTeachers']);
+
+    useEffect(() => {
+        fetchAllList(navigate, dispatch)
+      }, []);
 
     const lastPageSizeRequest = useSelector((state) => state.rootReducer.classroomPageReducer['pageSizeRequest']);
 
@@ -74,17 +83,6 @@ function CreateForm() {
             focused: validationStatus['descriptionInputFocused'],
             invalidText: CLASSROOM_DESCRIPTION_INVALID_INPUT_MESSAGE,
             showValidationError: validationStatus['descriptionInputShowValidationError']
-        },
-        {
-            key: 4,
-            id: CLASSROOM_TEACHER_INPUT_NAME_CREATE,
-            name: CLASSROOM_TEACHER_INPUT_NAME_CREATE,
-            label: CLASSROOM_TEACHER_INPUT_LABEL,
-            type: "text",
-            valid: true,
-            focused: undefined,
-            invalidText: "",
-            showValidationError: undefined
         }
     ]
 
@@ -116,6 +114,14 @@ function CreateForm() {
         dispatch(resetAlerts())
     }
 
+    const dataListOnClick = (id) => (e) => {
+        setValues({ ...values, [CLASSROOM_TEACHER_INPUT_NAME_CREATE]: id });
+    }
+
+    const dispatchDataList = (teachers) => {
+        dispatch(setChangedTeachers(teachers))
+    }
+
     const formValid = validationStatus.descriptionInputValid && validationStatus.capacityInputValid && validationStatus.numberInputValid
 
     return (
@@ -127,6 +133,7 @@ function CreateForm() {
                     {inputs.map((input) => (
                         <FormInput {...input} value={values[input.name]} onChange={onChange} onBlur={onBlur} />
                     ))}
+                    <DataList dispatchDataList={dispatchDataList} label={CLASSROOM_TEACHER_INPUT_LABEL} dataList={teachers} changedDataList={changedTeachers} dataListOnClick={dataListOnClick}/>
                     <button type="submit" className="btn btn-dark mt-2" disabled={!formValid}>Сохранить</button>
                     &#160;&#160;
                     <button onClick={cancel} type="button" className="btn btn-outline-dark mt-2">Отмена</button>

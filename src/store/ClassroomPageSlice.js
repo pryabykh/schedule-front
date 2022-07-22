@@ -26,6 +26,9 @@ const classroomPageSlice = createSlice({
         [CLASSROOM_DESCRIPTION_INPUT_NAME_CREATE + INPUT_SHOW_VALIDATION_ERROR]: false,
 
         showCreateModal: false,
+
+        teachers: [],
+        changedTeachers: [],
     },
     reducers: {
         setClassrooms: (state, action) => {
@@ -80,7 +83,14 @@ const classroomPageSlice = createSlice({
         },
         showCreateModal: (state, action) => {
             state.showCreateModal = true
-        }
+        },
+
+        setTeachers: (state, action) => {
+            state.teachers = action.payload;
+        },
+        setChangedTeachers: (state, action) => {
+            state.changedTeachers = action.payload;
+        },
     },
 });
 
@@ -95,7 +105,9 @@ export const {
     hideValidationError,
     hideCreateModal,
     showCreateModal,
-    resetCreateForm
+    resetCreateForm,
+    setTeachers,
+    setChangedTeachers
 } = classroomPageSlice.actions;
 
 export default classroomPageSlice.reducer;
