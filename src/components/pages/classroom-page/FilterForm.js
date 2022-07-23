@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { INPUT_MAX_LENGTH } from '../../../const/inputs';
-import { CLASSROOM_CAPACITY_TABLE_HEADER, CLASSROOM_DESCRIPTION_TABLE_HEADER, CLASSROOM_IN_CHARGE_TABLE_HEADER, CLASSROOM_NUMBER_TABLE_HEADER, FILTER_CRITERIA_OR_FILTER_VALUE_IS_EMPTY_MESSAGE } from '../../../const/interface';
+import { CLASSROOM_CAPACITY_TABLE_HEADER, CLASSROOM_DESCRIPTION_TABLE_HEADER, CLASSROOM_IN_CHARGE_TABLE_HEADER, CLASSROOM_NUMBER_TABLE_HEADER, CLASSROOM_SUBJECTS_TABLE_HEADER, FILTER_CRITERIA_OR_FILTER_VALUE_IS_EMPTY_MESSAGE } from '../../../const/interface';
 import { fetchAll } from '../../../services/ClassroomService/FetchAllClassroomService';
 import cn from 'classnames'
 import style from './classroom-page.module.css'
-import { CLASSROOM_CAPACITY_FILTER_ID, CLASSROOM_DESCRIPTION_FILTER_ID, CLASSROOM_NUMBER_FILTER_ID, CLASSROOM_TEACHER_FILTER_ID } from '../../../const/system';
+import { CLASSROOM_CAPACITY_FILTER_ID, CLASSROOM_DESCRIPTION_FILTER_ID, CLASSROOM_NUMBER_FILTER_ID, CLASSROOM_SUBJECTS_FILTER_ID, CLASSROOM_TEACHER_FILTER_ID } from '../../../const/system';
 
 function FilterForm() {
 
@@ -37,6 +37,11 @@ function FilterForm() {
             key: 4,
             view: CLASSROOM_IN_CHARGE_TABLE_HEADER,
             filterId: CLASSROOM_TEACHER_FILTER_ID
+        },
+        {
+            key: 5,
+            view: CLASSROOM_SUBJECTS_TABLE_HEADER,
+            filterId: CLASSROOM_SUBJECTS_FILTER_ID
         }
     ]
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { CLASSROOM_CAPACITY_TABLE_HEADER, CLASSROOM_DESCRIPTION_TABLE_HEADER, CLASSROOM_IN_CHARGE_TABLE_HEADER, CLASSROOM_NUMBER_TABLE_HEADER, LIST_OF_DATA_IS_EMPTY_FOR_TABLE_MESSAGE } from '../../../const/interface';
-import { CLASSROOM_CAPACITY_SORT_FIELD_ID, CLASSROOM_DESCRIPTION_SORT_FIELD_ID, CLASSROOM_NUMBER_SORT_FIELD_ID, CLASSROOM_TEACHER_SORT_FIELD_ID } from '../../../const/system';
+import { CLASSROOM_CAPACITY_TABLE_HEADER, CLASSROOM_DESCRIPTION_TABLE_HEADER, CLASSROOM_IN_CHARGE_TABLE_HEADER, CLASSROOM_NUMBER_TABLE_HEADER, CLASSROOM_SUBJECTS_TABLE_HEADER, LIST_OF_DATA_IS_EMPTY_FOR_TABLE_MESSAGE } from '../../../const/interface';
+import { CLASSROOM_CAPACITY_SORT_FIELD_ID, CLASSROOM_DESCRIPTION_SORT_FIELD_ID, CLASSROOM_NUMBER_SORT_FIELD_ID, CLASSROOM_SUBJECTS_SORT_FIELD_ID, CLASSROOM_TEACHER_SORT_FIELD_ID } from '../../../const/system';
 import { fetchAll } from '../../../services/ClassroomService/FetchAllClassroomService';
 import SortByAscItem from '../../shared/SortByAscItem';
 import SortByDescItem from '../../shared/SortByDescItem';
@@ -35,10 +35,18 @@ function Table() {
             key: 4,
             view: CLASSROOM_IN_CHARGE_TABLE_HEADER,
             fieldId: CLASSROOM_TEACHER_SORT_FIELD_ID
-        }
+        },
+        {
+            key: 5,
+            view: CLASSROOM_SUBJECTS_TABLE_HEADER,
+            fieldId: CLASSROOM_SUBJECTS_SORT_FIELD_ID
+        },
     ]
 
     const sortBy = (field) => (event) => {
+        if(field === CLASSROOM_SUBJECTS_SORT_FIELD_ID) {
+            return;
+        }
         let sortDirection = 'desc'
         if (lastPageSizeRequest.sortBy === field && lastPageSizeRequest.sortDirection === 'desc') {
             sortDirection = 'asc'
@@ -83,6 +91,10 @@ function Table() {
                                 classroom.teacher.firstName + " " +
                                 classroom.teacher.patronymic}
                             </td>
+                            <td>{(classroom.subjects && classroom.subjects > 0) ? 
+                            classroom.subjects.map((subject) => {
+                                return subject.name
+                            }).join(', ') : "-"}</td>
                         </tr>
                     ))}
                 </tbody>

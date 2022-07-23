@@ -30,6 +30,7 @@ export const CLASSROOM_NUMBER_TABLE_HEADER = "Номер"
 export const CLASSROOM_CAPACITY_TABLE_HEADER = "Вместимость"
 export const CLASSROOM_DESCRIPTION_TABLE_HEADER = "Описание"
 export const CLASSROOM_IN_CHARGE_TABLE_HEADER = "Заведующий"
+export const CLASSROOM_SUBJECTS_TABLE_HEADER = "Приоритет предметов"
 
 export const CLASSROOM_NUMBER_INPUT_LABEL = "Номер"
 export const CLASSROOM_CAPACITY_INPUT_LABEL = "Вместимость"
