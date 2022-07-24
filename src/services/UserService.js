@@ -3,7 +3,7 @@ import { CONFLICT_MESSAGE, SOMETHING_WENT_WRONG_MESSAGE, SUCCESSFUL_REGISTRATION
 import { LOGIN_ROUTE } from "../const/routes";
 import { hideLoader, setAlertDanger, setAlertSuccess, setAlertWarning, showLoader } from "../store/appSlice";
 
-export const register = async (user, navigate, dispatch) => {
+export const register = (user, navigate, dispatch) => {
     dispatch(showLoader())
     apiRegister(user).then((response) => {
         if(response.ok) {

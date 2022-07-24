@@ -36,6 +36,7 @@ export const CLASSROOM_NUMBER_INPUT_LABEL = "Номер"
 export const CLASSROOM_CAPACITY_INPUT_LABEL = "Вместимость"
 export const CLASSROOM_DESCRIPTION_INPUT_LABEL = "Описание"
 export const CLASSROOM_TEACHER_INPUT_LABEL = "Заведующий"
+export const CLASSROOM_SUBJECTS_INPUT_LABEL = "Приоритет предметов"
 
 export const CLASSROOM_NUMBER_INVALID_INPUT_MESSAGE = "Поле Номер не должно быть пустым"
 export const CLASSROOM_CAPACITY_INVALID_INPUT_MESSAGE = "Поле Вместимость должно быть числом больше единицы"

@@ -91,7 +91,7 @@ function Table() {
                                 classroom.teacher.firstName + " " +
                                 classroom.teacher.patronymic}
                             </td>
-                            <td>{(classroom.subjects && classroom.subjects > 0) ? 
+                            <td>{(classroom.subjects && classroom.subjects.length > 0) ? 
                             classroom.subjects.map((subject) => {
                                 return subject.name
                             }).join(', ') : "-"}</td>

@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import cn from 'classnames';
-import style from "./data-list.module.css"
+import style from "./data-list-multi-select.module.css"
 
-function DataList({ id, label, dataList, changedDataList, dataListOnClick, dataListDeleteItem, dispatchDataList, valid, invalidText, focused, showValidationError, onChange, onBlur }) {
+function DataListMultiSelect({ id, label, dataList, changedDataList, dataListOnClick, dataListDeleteItem, dispatchDataList, valid, invalidText, focused, showValidationError, onChange, onBlur }) {
     const [showDataList, setShowDataList] = useState(false)
     const [inputValue, setInputValue] = useState("")
+    const [values, setValues] = useState([])
 
     const inputClassNames = cn('form-control', style.input, {
         [style['input-invalid']]: (showValidationError && focused)
@@ -27,9 +28,6 @@ function DataList({ id, label, dataList, changedDataList, dataListOnClick, dataL
 
     const onChangeInput = (e) => {
         const value = e.target.value
-        if(value.length === 0) {
-            dataListDeleteItem(e)
-        }
         setInputValue(value)
         dispatchDataList(dataList.filter((item) => {
             return item.value.toLowerCase().indexOf(value.toLowerCase()) > -1
@@ -37,14 +35,30 @@ function DataList({ id, label, dataList, changedDataList, dataListOnClick, dataL
     }
 
     const clickOnListItem = (value, id) => (e) => {
+        if(values.filter(item => item.id === id).length > 0) return;
+        setInputValue("")
         dataListOnClick(id)(e)
-        setInputValue(value)
+        setValues([...values, {
+            id, value
+        }])
+    }
+
+    const deleteItem = (id) => (e) => {
+        dataListDeleteItem(id)(e)
+        setValues(values.filter(item => item.id !== id));
     }
 
     return (
         <>
             <div className={style['input-container']}>
                 <label htmlFor={id} className={labelClassNames}>{label}</label>
+                <div className={style['subjects-container']}>
+                    {values.map((item) => (
+                        <div key={item.id} className={style['subject-item']}>
+                            <span>{item.value}</span><span onClick={deleteItem(item.id)} className={style['cursor-pointer']}>&#10006;</span>
+                        </div>
+                    ))}
+                </div>
                 <input
                     value={inputValue}
                     onChange={onChangeInput}
@@ -58,6 +72,7 @@ function DataList({ id, label, dataList, changedDataList, dataListOnClick, dataL
                 {showDataList && (
                     <ol className="list-group">
                         {changedDataList.map((item) => (
+                            
                             <li onMouseDown={clickOnListItem(item.value, item.id)} key={item.id} className="list-group-item list-group-item-action">
                                 {item.value}
                             </li>
@@ -70,4 +85,4 @@ function DataList({ id, label, dataList, changedDataList, dataListOnClick, dataL
     );
 }
 
-export default DataList;
+export default DataListMultiSelect;

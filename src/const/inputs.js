@@ -7,5 +7,6 @@ export const CLASSROOM_NUMBER_INPUT_NAME_CREATE = "number"
 export const CLASSROOM_CAPACITY_INPUT_NAME_CREATE = "capacity"
 export const CLASSROOM_DESCRIPTION_INPUT_NAME_CREATE = "description"
 export const CLASSROOM_TEACHER_INPUT_NAME_CREATE = "teacher"
+export const CLASSROOM_SUBJECTS_INPUT_NAME_CREATE = "subjects"
 
 export const INPUT_MAX_LENGTH = 255

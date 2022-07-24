@@ -5,16 +5,18 @@ import style from './classroom-page.module.css';
 import cn from 'classnames';
 import FormInput from '../../shared/FormInput/FormInput';
 import { CLASSROOM_CAPACITY_INPUT_NAME_CREATE, CLASSROOM_DESCRIPTION_INPUT_NAME_CREATE, CLASSROOM_NUMBER_INPUT_NAME_CREATE, CLASSROOM_TEACHER_INPUT_NAME_CREATE, INPUT_MAX_LENGTH } from '../../../const/inputs';
-import { CLASSROOM_CAPACITY_INPUT_LABEL, CLASSROOM_CAPACITY_INVALID_INPUT_MESSAGE, CLASSROOM_DESCRIPTION_INPUT_LABEL, CLASSROOM_DESCRIPTION_INVALID_INPUT_MESSAGE, CLASSROOM_NUMBER_INPUT_LABEL, CLASSROOM_NUMBER_INVALID_INPUT_MESSAGE, CLASSROOM_TEACHER_INPUT_LABEL } from '../../../const/interface';
+import { CLASSROOM_CAPACITY_INPUT_LABEL, CLASSROOM_CAPACITY_INVALID_INPUT_MESSAGE, CLASSROOM_DESCRIPTION_INPUT_LABEL, CLASSROOM_DESCRIPTION_INVALID_INPUT_MESSAGE, CLASSROOM_NUMBER_INPUT_LABEL, CLASSROOM_NUMBER_INVALID_INPUT_MESSAGE, CLASSROOM_SUBJECTS_INPUT_LABEL, CLASSROOM_TEACHER_INPUT_LABEL } from '../../../const/interface';
 import { INPUT_FOCUSED, INPUT_SHOW_VALIDATION_ERROR, INPUT_VALID, ON_BLUR, ON_CHANGE } from '../../../const/validation';
 import { validate } from './FormValidation';
 import { create } from '../../../services/ClassroomService/CreateClassroomService';
 import AlertWarning from '../../shared/Alerts/AlertWarning/AlertWarning';
 import AlertDanger from '../../shared/Alerts/AlertDanger/AlertDanger';
-import { hideCreateModal, resetCreateForm, setChangedTeachers, setTeachers } from '../../../store/ClassroomPageSlice';
+import { hideCreateModal, resetCreateForm, setChangedSubjects, setChangedTeachers, setTeachers } from '../../../store/ClassroomPageSlice';
 import { resetAlerts } from '../../../store/appSlice';
 import DataList from '../../shared/DataList/DataList';
-import { fetchAllList } from '../../../services/TeacherService/FetchAllListTeacherService';
+import { fetchAllList as fetchAllTeachersList} from '../../../services/TeacherService/FetchAllListTeacherService';
+import DataListMultiSelect from '../../shared/DataListMultiSelect/DataListMultiSelect';
+import { fetchAllList as fetchAllSubjectsList } from '../../../services/SubjectService/FetchAllListSubjectService';
 
 function CreateForm() {
     const dispatch = useDispatch()
@@ -24,15 +26,20 @@ function CreateForm() {
         number: "",
         capacity: "",
         description: "",
-        teacher: ""
+        teacher: "",
+        subjects: []
     });
-    
-    const teachers = useSelector((state) => state.rootReducer.classroomPageReducer['teachers']);
-    const changedTeachers = useSelector((state) => state.rootReducer.classroomPageReducer['changedTeachers']);
 
     useEffect(() => {
-        fetchAllList(navigate, dispatch)
-      }, []);
+        fetchAllTeachersList(navigate, dispatch)
+        fetchAllSubjectsList(navigate, dispatch)
+        
+    }, []);
+
+    const teachers = useSelector((state) => state.rootReducer.classroomPageReducer['teachers']);
+    const changedTeachers = useSelector((state) => state.rootReducer.classroomPageReducer['changedTeachers']);
+    const subjects = useSelector((state) => state.rootReducer.classroomPageReducer['subjects']);
+    const changedSubjects = useSelector((state) => state.rootReducer.classroomPageReducer['changedSubjects']);
 
     const lastPageSizeRequest = useSelector((state) => state.rootReducer.classroomPageReducer['pageSizeRequest']);
 
@@ -115,11 +122,27 @@ function CreateForm() {
     }
 
     const dataListOnClick = (id) => (e) => {
-        setValues({ ...values, [CLASSROOM_TEACHER_INPUT_NAME_CREATE]: id });
+        setValues({ ...values, teacher: id });
     }
 
-    const dispatchDataList = (teachers) => {
+    const dataListDeleteItem = (e) => {
+        setValues({ ...values, teacher: "" });
+    }
+
+    const dataListMultiSelectOnClick = (id) => (e) => {
+        setValues({ ...values, subjects: [...values.subjects, id] });
+    }
+
+    const dataListMultiSelectDeleteItem = (id) => (e) => {
+        setValues({ ...values, subjects: values.subjects.filter(item => item !== id) })
+    }
+
+    const dispatchTeachersDataList = (teachers) => {
         dispatch(setChangedTeachers(teachers))
+    }
+
+    const dispatchSubjectsDataList = (subjects) => {
+        dispatch(setChangedSubjects(subjects))
     }
 
     const formValid = validationStatus.descriptionInputValid && validationStatus.capacityInputValid && validationStatus.numberInputValid
@@ -133,7 +156,8 @@ function CreateForm() {
                     {inputs.map((input) => (
                         <FormInput {...input} value={values[input.name]} onChange={onChange} onBlur={onBlur} />
                     ))}
-                    <DataList dispatchDataList={dispatchDataList} label={CLASSROOM_TEACHER_INPUT_LABEL} dataList={teachers} changedDataList={changedTeachers} dataListOnClick={dataListOnClick}/>
+                    <DataList dispatchDataList={dispatchTeachersDataList} label={CLASSROOM_TEACHER_INPUT_LABEL} dataList={teachers} changedDataList={changedTeachers} dataListOnClick={dataListOnClick} dataListDeleteItem={dataListDeleteItem}/>
+                    <DataListMultiSelect dispatchDataList={dispatchSubjectsDataList} label={CLASSROOM_SUBJECTS_INPUT_LABEL} dataList={subjects} changedDataList={changedSubjects} dataListOnClick={dataListMultiSelectOnClick} dataListDeleteItem={dataListMultiSelectDeleteItem} />
                     <button type="submit" className="btn btn-dark mt-2" disabled={!formValid}>Сохранить</button>
                     &#160;&#160;
                     <button onClick={cancel} type="button" className="btn btn-outline-dark mt-2">Отмена</button>

@@ -6,8 +6,8 @@ import { setChangedTeachers, setTeachers } from "../../store/ClassroomPageSlice"
 import { logout } from "../AuthService/LogoutAuthService";
 import { refresh } from "../AuthService/RefreshAuthService";
 
-export const fetchAllList = async (navigate, dispatch) => {
-    if(!tokenExists()) {
+export const fetchAllList = (navigate, dispatch) => {
+    if (!tokenExists()) {
         logout(navigate, dispatch)
         return;
     }
@@ -20,7 +20,7 @@ export const fetchAllList = async (navigate, dispatch) => {
                 value: teacher.lastName + " " + teacher.firstName + " " + teacher.patronymic
             }
         })
-        
+
         dispatch(setTeachers(teachers))
         dispatch(setChangedTeachers(teachers))
         dispatch(setAlertWarning(""))
@@ -37,24 +37,25 @@ export const fetchAllList = async (navigate, dispatch) => {
     }
 
     dispatch(showLoader())
-    return apiFetchAllList().then((response) => {
-        if(response.ok) {
-            doSuccess(response)
-        } else if(response.status === 401) {
-            refresh(navigate, dispatch).then(() => {
-                dispatch(hideLoader())
-                apiFetchAllList(navigate, dispatch)
-            });
-        } else {
+    return apiFetchAllList().then(
+        (response) => {
+            if (response.ok) {
+                doSuccess(response)
+            } else if (response.status === 401) {
+                refresh(navigate, dispatch).then(() => {
+                    dispatch(hideLoader())
+                    fetchAllList(navigate, dispatch)
+                });
+            } else {
+                doFail()
+            }
+        }, () => {
             doFail()
-        }
-    }, () => {
-        doFail()
-    })
+        })
 }
 
 const tokenExists = () => {
-    if(JSON.parse(localStorage.getItem(ACCESS_DATA))) {
+    if (JSON.parse(localStorage.getItem(ACCESS_DATA))) {
         return true;
     } else {
         return false;

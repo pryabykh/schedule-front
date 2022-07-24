@@ -1,6 +1,7 @@
 import { refresh as apiRefresh } from "../../api/AuthApi";
 import { ACCESS_DATA, ACCESS_EXPIRES_AT, ACCESS_TOKEN, REFRESH_EXPIRES_AT, REFRESH_TOKEN } from "../../const/local-storage";
 import { LOGIN_ROUTE } from "../../const/routes";
+import { setRefreshInProgress } from "../../store/appSlice";
 import { logout } from "./LogoutAuthService";
 
 export const refresh = async (navigate, dispatch) => {
@@ -23,14 +24,19 @@ export const refresh = async (navigate, dispatch) => {
         localStorage.setItem(ACCESS_DATA, JSON.stringify(dataForLocalStorage)) //JSON.parse(jsonString)
     }
 
-    const doFail = () => {
+    const doLogout = () => {
         logout(navigate, dispatch)
     }
 
+    const doFail = () => {
+        
+    }
     return apiRefresh(refreshToken).then(
         async (response) => {
             if(response.ok) {
                 await doSuccess(response)
+            } else if(response.status === 401) {
+                doLogout()
             }  else {
                 doFail()
             }

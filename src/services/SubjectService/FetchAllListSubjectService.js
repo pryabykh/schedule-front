@@ -1,13 +1,12 @@
-import { create as apiCreate } from "../../api/ClassroomApi";
-import { CONFLICT_CLASSROOM_MESSAGE, SOMETHING_WENT_WRONG_MESSAGE } from "../../const/interface";
+import { fetchAllList as apiFetchAllList } from "../../api/SubjectApi";
+import { SOMETHING_WENT_WRONG_MESSAGE } from "../../const/interface";
 import { ACCESS_DATA } from "../../const/local-storage";
 import { hideLoader, setAlertDanger, setAlertSuccess, setAlertWarning, showLoader } from "../../store/appSlice";
-import { hideCreateModal, resetCreateForm } from "../../store/ClassroomPageSlice";
+import { setChangedSubjects, setChangedTeachers, setSubjects, setTeachers } from "../../store/ClassroomPageSlice";
 import { logout } from "../AuthService/LogoutAuthService";
 import { refresh } from "../AuthService/RefreshAuthService";
-import { fetchAll } from "./FetchAllClassroomService";
 
-export const create = (classroom, lastPageSizeRequest, navigate, dispatch) => {
+export const fetchAllList = (navigate, dispatch) => {
     if(!tokenExists()) {
         logout(navigate, dispatch)
         return;
@@ -15,16 +14,18 @@ export const create = (classroom, lastPageSizeRequest, navigate, dispatch) => {
 
     const doSuccess = async (response) => {
         const responseJson = await response.json();
+        const subjects = responseJson.map((subject) => {
+            return {
+                id: subject.id,
+                value: subject.name
+            }
+        })
+        
+        dispatch(setSubjects(subjects))
+        dispatch(setChangedSubjects(subjects))
         dispatch(setAlertWarning(""))
         dispatch(setAlertDanger(""))
         dispatch(setAlertSuccess(""))
-        dispatch(hideLoader())
-    }
-
-    const doConflict = () => {
-        dispatch(setAlertSuccess(""))
-        dispatch(setAlertDanger(""))
-        dispatch(setAlertWarning(CONFLICT_CLASSROOM_MESSAGE))
         dispatch(hideLoader())
     }
 
@@ -36,20 +37,14 @@ export const create = (classroom, lastPageSizeRequest, navigate, dispatch) => {
     }
 
     dispatch(showLoader())
-    return apiCreate(classroom).then((response) => {
+    return apiFetchAllList().then((response) => {
         if(response.ok) {
             doSuccess(response)
-            fetchAll(lastPageSizeRequest, navigate, dispatch).then(() => {
-                dispatch(hideCreateModal())
-                dispatch(resetCreateForm())
-            })
         } else if(response.status === 401) {
             refresh(navigate, dispatch).then(() => {
                 dispatch(hideLoader())
-                create(classroom, lastPageSizeRequest, navigate, dispatch)
+                fetchAllList(navigate, dispatch)
             });
-        } else if(response.status === 409) {
-            doConflict()
         } else {
             doFail()
         }

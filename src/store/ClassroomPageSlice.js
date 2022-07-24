@@ -29,6 +29,8 @@ const classroomPageSlice = createSlice({
 
         teachers: [],
         changedTeachers: [],
+        subjects: [],
+        changedSubjects: [],
     },
     reducers: {
         setClassrooms: (state, action) => {
@@ -91,7 +93,13 @@ const classroomPageSlice = createSlice({
         setChangedTeachers: (state, action) => {
             state.changedTeachers = action.payload;
         },
-    },
+        setSubjects: (state, action) => {
+            state.subjects = action.payload;
+        },
+        setChangedSubjects: (state, action) => {
+            state.changedSubjects = action.payload;
+        }
+    }
 });
 
 export const { 
@@ -107,7 +115,9 @@ export const {
     showCreateModal,
     resetCreateForm,
     setTeachers,
-    setChangedTeachers
+    setChangedTeachers,
+    setSubjects,
+    setChangedSubjects,
 } = classroomPageSlice.actions;
 
 export default classroomPageSlice.reducer;
