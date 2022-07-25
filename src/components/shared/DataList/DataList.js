@@ -4,7 +4,7 @@ import style from "./data-list.module.css"
 
 function DataList({ id, label, dataList, changedDataList, dataListOnClick, dataListDeleteItem, defaultValue, dispatchDataList, valid, invalidText, focused, showValidationError, onChange, onBlur }) {
     const [showDataList, setShowDataList] = useState(false)
-    const [inputValue, setInputValue] = useState(defaultValue)
+    const [inputValue, setInputValue] = useState(defaultValue ?? "")
 
     const inputClassNames = cn('form-control', style.input, {
         [style['input-invalid']]: (showValidationError && focused)
