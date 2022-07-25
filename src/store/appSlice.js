@@ -17,7 +17,8 @@ const appSlice = createSlice({
         },
         hideLoader: (state, action) => {
             state.loaderCount = state.loaderCount - 1
-            if(state.loaderCount === 0) {
+            if(state.loaderCount <= 0) {
+                state.loaderCount = 0;
                 state.showLoader = false;
             }
         },

@@ -18,6 +18,7 @@ import { fetchAllList as fetchAllTeachersList} from '../../../services/TeacherSe
 import DataListMultiSelect from '../../shared/DataListMultiSelect/DataListMultiSelect';
 import { fetchAllList as fetchAllSubjectsList } from '../../../services/SubjectService/FetchAllListSubjectService';
 import { update } from '../../../services/ClassroomService/UpdateClassroomService';
+import { remove } from '../../../services/ClassroomService/DeleteClassroomService';
 
 function UpdateForm() {
     const dispatch = useDispatch()
@@ -124,6 +125,10 @@ function UpdateForm() {
         dispatch(resetAlerts())
     }
 
+    const removeClassroom = (e) => {
+        remove(classroomToUpdate.id, lastPageSizeRequest, navigate, dispatch)
+    }
+
     const dataListOnClick = (id) => (e) => {
         setValues({ ...values, teacher: id });
     }
@@ -162,6 +167,8 @@ function UpdateForm() {
                     <DataList dispatchDataList={dispatchTeachersDataList} label={CLASSROOM_TEACHER_INPUT_LABEL} dataList={teachers} changedDataList={changedTeachers} dataListOnClick={dataListOnClick} dataListDeleteItem={dataListDeleteItem} defaultValue={classroomToUpdate && classroomToUpdate.teacher ? [classroomToUpdate.teacher.lastName, classroomToUpdate.teacher.firstName, classroomToUpdate.teacher.patronymic].join(' ') : ""}/>
                     <DataListMultiSelect dispatchDataList={dispatchSubjectsDataList} label={CLASSROOM_SUBJECTS_INPUT_LABEL} dataList={subjects} changedDataList={changedSubjects} dataListOnClick={dataListMultiSelectOnClick} dataListDeleteItem={dataListMultiSelectDeleteItem} defaultValues={classroomToUpdate.subjects.map(subject => ({id: subject.id, value: subject.name}))}/>
                     <button type="submit" className="btn btn-dark mt-2" disabled={!formValid}>Обновить</button>
+                    &#160;&#160;
+                    <button onClick={removeClassroom} type="button" className="btn btn-danger mt-2">Удалить</button>
                     &#160;&#160;
                     <button onClick={cancel} type="button" className="btn btn-outline-dark mt-2">Отмена</button>
                 </div>
