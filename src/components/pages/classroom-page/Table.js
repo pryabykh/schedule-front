@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { CLASSROOM_CAPACITY_TABLE_HEADER, CLASSROOM_DESCRIPTION_TABLE_HEADER, CLASSROOM_IN_CHARGE_TABLE_HEADER, CLASSROOM_NUMBER_TABLE_HEADER, CLASSROOM_SUBJECTS_TABLE_HEADER, LIST_OF_DATA_IS_EMPTY_FOR_TABLE_MESSAGE } from '../../../const/interface';
 import { CLASSROOM_CAPACITY_SORT_FIELD_ID, CLASSROOM_DESCRIPTION_SORT_FIELD_ID, CLASSROOM_NUMBER_SORT_FIELD_ID, CLASSROOM_SUBJECTS_SORT_FIELD_ID, CLASSROOM_TEACHER_SORT_FIELD_ID } from '../../../const/system';
 import { fetchAll } from '../../../services/ClassroomService/FetchAllClassroomService';
+import { showUpdateModal } from '../../../store/ClassroomPageSlice';
 import SortByAscItem from '../../shared/SortByAscItem';
 import SortByDescItem from '../../shared/SortByDescItem';
 import style from './classroom-page.module.css';
@@ -61,6 +62,10 @@ function Table() {
         fetchAll(pageSize, navigate, dispatch)
     }
 
+    const openUpdateModal = (classroom) => (event) => {
+        dispatch(showUpdateModal(classroom))
+    }
+
     return (
         <>
             {classrooms.length === 0 && (<div className={style['data-is-empty-message']}><b> {LIST_OF_DATA_IS_EMPTY_FOR_TABLE_MESSAGE} </b></div>)}
@@ -82,7 +87,7 @@ function Table() {
                 </thead>
                 <tbody>
                     {classrooms.map((classroom) => (
-                        <tr key={classroom.id}>
+                        <tr onClick={openUpdateModal(classroom)} className={style['cursor-pointer']} key={classroom.id}>
                             <th scope="row">{classroom.number}</th>
                             <td>{classroom.capacity}</td>
                             <td>{classroom.description}</td>

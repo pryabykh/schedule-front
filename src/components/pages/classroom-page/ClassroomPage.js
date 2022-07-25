@@ -7,17 +7,20 @@ import { showCreateModal } from '../../../store/ClassroomPageSlice';
 import Header from '../../shared/Header/Header';
 import Loader from '../../shared/Loader/Loader';
 import CreateModal from '../../shared/Modal/CreateModal';
+import UpdateModal from '../../shared/Modal/UpdateModal';
 import CreateForm from './CreateForm';
 import FilterForm from './FilterForm';
 import Pagination from './Pagination';
 import SortByIdComponent from './SortByIdComponent';
 import Table from './Table';
+import UpdateForm from './UpdateForm';
 
 function ClassroomPage() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const sizeOfPage = useSelector((state) => state.rootReducer.classroomPageReducer['sizeOfPage']);
   const shouldShowCreateModal = useSelector((state) => state.rootReducer.classroomPageReducer['showCreateModal']);
+  const shouldShowUpdateModal = useSelector((state) => state.rootReducer.classroomPageReducer['showUpdateModal']);
 
   useEffect(() => {
     const pageSize = {
@@ -38,6 +41,7 @@ function ClassroomPage() {
         <>
         <Loader />
         {shouldShowCreateModal && <CreateModal><CreateForm /></CreateModal>}
+        {shouldShowUpdateModal && <UpdateModal><UpdateForm /></UpdateModal>}
         <Header />
         <div className='container'>
         <h1 className='mt-2 mb-2'>Кабинеты</h1>

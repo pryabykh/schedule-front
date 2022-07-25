@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import cn from 'classnames';
 import style from "./data-list-multi-select.module.css"
 
-function DataListMultiSelect({ id, label, dataList, changedDataList, dataListOnClick, dataListDeleteItem, dispatchDataList, valid, invalidText, focused, showValidationError, onChange, onBlur }) {
+function DataListMultiSelect({ id, label, dataList, changedDataList, dataListOnClick, dataListDeleteItem, defaultValues, dispatchDataList, valid, invalidText, focused, showValidationError, onChange, onBlur }) {
     const [showDataList, setShowDataList] = useState(false)
     const [inputValue, setInputValue] = useState("")
-    const [values, setValues] = useState([])
+    const [values, setValues] = useState(defaultValues)
 
     const inputClassNames = cn('form-control', style.input, {
         [style['input-invalid']]: (showValidationError && focused)

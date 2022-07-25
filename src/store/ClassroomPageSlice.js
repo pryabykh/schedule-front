@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { CLASSROOM_CAPACITY_INPUT_NAME_CREATE, CLASSROOM_DESCRIPTION_INPUT_NAME_CREATE, CLASSROOM_NUMBER_INPUT_NAME_CREATE } from '../const/inputs';
+import { CLASSROOM_CAPACITY_INPUT_NAME_CREATE, CLASSROOM_CAPACITY_INPUT_NAME_UPDATE, CLASSROOM_DESCRIPTION_INPUT_NAME_CREATE, CLASSROOM_DESCRIPTION_INPUT_NAME_UPDATE, CLASSROOM_NUMBER_INPUT_NAME_CREATE, CLASSROOM_NUMBER_INPUT_NAME_UPDATE } from '../const/inputs';
 import { DEFAULT_SIZE_OF_PAGE } from '../const/pagination';
 import { INPUT_FOCUSED, INPUT_SHOW_VALIDATION_ERROR, INPUT_VALID } from '../const/validation';
 
@@ -12,6 +12,7 @@ const classroomPageSlice = createSlice({
         totalElements: 0,
         totalPages: 0,
         currentPage: 0,
+        classroomToUpdate: {},
 
         [CLASSROOM_NUMBER_INPUT_NAME_CREATE + INPUT_FOCUSED]: false,
         [CLASSROOM_NUMBER_INPUT_NAME_CREATE + INPUT_VALID]: false,
@@ -25,7 +26,21 @@ const classroomPageSlice = createSlice({
         [CLASSROOM_DESCRIPTION_INPUT_NAME_CREATE + INPUT_VALID]: false,
         [CLASSROOM_DESCRIPTION_INPUT_NAME_CREATE + INPUT_SHOW_VALIDATION_ERROR]: false,
 
+
+        [CLASSROOM_NUMBER_INPUT_NAME_UPDATE + INPUT_FOCUSED]: false,
+        [CLASSROOM_NUMBER_INPUT_NAME_UPDATE + INPUT_VALID]: true,
+        [CLASSROOM_NUMBER_INPUT_NAME_UPDATE + INPUT_SHOW_VALIDATION_ERROR]: false,
+
+        [CLASSROOM_CAPACITY_INPUT_NAME_UPDATE + INPUT_FOCUSED]: false,
+        [CLASSROOM_CAPACITY_INPUT_NAME_UPDATE + INPUT_VALID]: true,
+        [CLASSROOM_CAPACITY_INPUT_NAME_UPDATE + INPUT_SHOW_VALIDATION_ERROR]: false,
+
+        [CLASSROOM_DESCRIPTION_INPUT_NAME_UPDATE + INPUT_FOCUSED]: false,
+        [CLASSROOM_DESCRIPTION_INPUT_NAME_UPDATE + INPUT_VALID]: true,
+        [CLASSROOM_DESCRIPTION_INPUT_NAME_UPDATE + INPUT_SHOW_VALIDATION_ERROR]: false,
+
         showCreateModal: false,
+        showUpdateModal: false,
 
         teachers: [],
         changedTeachers: [],
@@ -59,6 +74,20 @@ const classroomPageSlice = createSlice({
             state[CLASSROOM_DESCRIPTION_INPUT_NAME_CREATE + INPUT_SHOW_VALIDATION_ERROR] = false
         },
 
+        resetUpdateForm: (state, action) => {
+            state[CLASSROOM_NUMBER_INPUT_NAME_UPDATE + INPUT_FOCUSED] = false
+            state[CLASSROOM_NUMBER_INPUT_NAME_UPDATE + INPUT_VALID] = true
+            state[CLASSROOM_NUMBER_INPUT_NAME_UPDATE + INPUT_SHOW_VALIDATION_ERROR] = false
+    
+            state[CLASSROOM_CAPACITY_INPUT_NAME_UPDATE + INPUT_FOCUSED] = false
+            state[CLASSROOM_CAPACITY_INPUT_NAME_UPDATE + INPUT_VALID] = true
+            state[CLASSROOM_CAPACITY_INPUT_NAME_UPDATE + INPUT_SHOW_VALIDATION_ERROR] = false
+    
+            state[CLASSROOM_DESCRIPTION_INPUT_NAME_UPDATE + INPUT_FOCUSED] = false
+            state[CLASSROOM_DESCRIPTION_INPUT_NAME_UPDATE + INPUT_VALID] = true
+            state[CLASSROOM_DESCRIPTION_INPUT_NAME_UPDATE + INPUT_SHOW_VALIDATION_ERROR] = false
+        },
+
         setInputInvalid: (state, action) => {
             const inputName = action.payload;
             state[inputName + INPUT_VALID] = false;
@@ -85,6 +114,13 @@ const classroomPageSlice = createSlice({
         },
         showCreateModal: (state, action) => {
             state.showCreateModal = true
+        },
+        hideUpdateModal: (state, action) => {
+            state.showUpdateModal = false
+        },
+        showUpdateModal: (state, action) => {
+            state.classroomToUpdate = action.payload
+            state.showUpdateModal = true
         },
 
         setTeachers: (state, action) => {
@@ -113,7 +149,10 @@ export const {
     hideValidationError,
     hideCreateModal,
     showCreateModal,
+    hideUpdateModal,
+    showUpdateModal,
     resetCreateForm,
+    resetUpdateForm,
     setTeachers,
     setChangedTeachers,
     setSubjects,
